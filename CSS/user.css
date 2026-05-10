@@ -1,4 +1,7 @@
-/* Reset general */
+/* ========================= */
+/* RESET GENERAL */
+/* ========================= */
+
 * {
     margin: 0;
     padding: 0;
@@ -6,16 +9,23 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Fondo */
+/* ========================= */
+/* BODY */
+/* ========================= */
+
 body {
     background-image: url("../Imagenes/canchaUV.webp");
-    background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    background-attachment: scroll;
+    min-height: 100vh;
 }
 
-/* Capa oscura sobre el fondo */
+/* ========================= */
+/* CAPA OSCURA */
+/* ========================= */
+
 .capa {
     position: fixed;
     width: 100%;
@@ -26,17 +36,21 @@ body {
     left: 0;
 }
 
-/* ENCABEZADO */
+/* ========================= */
+/* HEADER */
+/* ========================= */
 
 .header {
     width: 100%;
-    height: 100px;
+    height: 90px;
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 100;
 }
 
 /* Contenedor del header */
+
 .container {
     width: 100%;
     max-width: 1700px;
@@ -45,16 +59,23 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 0 20px;
 }
 
-/* Icono del menú */
+/* ========================= */
+/* BOTÓN MENÚ */
+/* ========================= */
+
 .btn-menu label {
     color: #fff;
-    font-size: 100px;
+    font-size: clamp(35px, 5vw, 70px);
     cursor: pointer;
 }
 
-/* Título */
+/* ========================= */
+/* LOGO */
+/* ========================= */
+
 .logo {
     display: flex;
     align-items: center;
@@ -63,23 +84,30 @@ body {
 .logo h1 {
     color: #fff;
     font-weight: 400;
-    font-size: 45px;
+    font-size: clamp(20px, 4vw, 45px);
     margin-left: 10px;
 }
 
-/* Botón cerrar sesión */
+/* ========================= */
+/* BOTÓN CERRAR SESIÓN */
+/* ========================= */
+
 .menu a {
     color: #fff;
-    font-size: 50px;
-    text-decoration: none;
-
+    font-size: clamp(20px, 4vw, 40px);
+    text-decoration: underline;
+    border: black;
 }
 
+/* ========================= */
 /* MENÚ LATERAL */
+/* ========================= */
 
 #btn-menu {
     display: none;
 }
+
+/* Fondo oscuro */
 
 .container-menu {
     position: fixed;
@@ -88,130 +116,267 @@ body {
     height: 100vh;
     top: 0;
     left: 0;
+
     transition: all 500ms ease;
+
     opacity: 0;
     visibility: hidden;
+
+    z-index: 200;
 }
 
 /* Mostrar menú */
+
 #btn-menu:checked~.container-menu {
     opacity: 1;
     visibility: visible;
 }
 
 /* Panel lateral */
+
 .cont-menu {
     width: 100%;
-    max-width: 250px;
+    max-width: 280px;
     background: #0414a5;
     height: 100vh;
     position: relative;
+
     transition: all 500ms ease;
+
     transform: translateX(-100%);
 }
 
 /* Animación apertura */
+
 #btn-menu:checked~.container-menu .cont-menu {
     transform: translateX(0%);
 }
 
-/* Navegación del menú */
+/* Navegación */
+
 .cont-menu nav {
     transform: translateY(13%);
 }
 
-/* Links del menú */
-.cont-menu nav a {
+/* Links */
 
+.cont-menu nav a {
     position: relative;
     display: block;
     text-decoration: none;
-    font-size: 30px;
-    padding: 33px;
+
+    font-size: clamp(18px, 3vw, 28px);
+
+    padding: 50px;
+
     color: #c7c7c7;
+
     border-left: 5px solid transparent;
+
     transition: all 400ms ease;
 }
 
 /* Hover */
+
 .cont-menu nav a:hover {
     border-left: 5px solid #c7c7c7;
     background: #501900;
 }
 
 /* Botón cerrar menú */
+
 .cont-menu label {
     position: fixed;
-    right: 90px;
-    top: 15px;
+    right: 40%;
+    top: 20px;
+
     color: #fff;
     cursor: pointer;
-    font-size: 55px;
+
+    font-size: clamp(30px, 5vw, 50px);
 }
 
+/* ========================= */
+/* CONTENIDO */
+/* ========================= */
 
 .contenido {
-    margin-left: 450px;
-    /* espacio para el menú */
+    width: 100%;
+
+    max-width: 1200px;
+
+    margin: auto;
+
     padding: 20px;
-    margin-top: 100px;
-    ;
+
+    margin-top: 110px;
 }
+
+/* Títulos */
 
 .contenido h2 {
     color: #ffffff;
+
     margin-bottom: 20px;
-    font-size: 50px;
+
+    font-size: clamp(28px, 5vw, 50px);
 }
 
+/* Texto */
+
 .contenido p {
-    font-size: 20px;
+    font-size: clamp(16px, 2vw, 22px);
+
     color: #ffffff;
 }
 
-
-.formulario {
-    margin-top: 20px;
-    background: rgb(255, 255, 255);
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #afd6fc;
-    width: 900px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
+/* ========================= */
+/* TARJETAS */
+/* ========================= */
 
 .tarjeta {
     background: rgb(226, 242, 255);
+
     padding: 20px;
+
     border-radius: 10px;
+
     border: 1px solid #afd6fc;
-    width: 900px;
+
+    width: 100%;
+
+    max-width: 900px;
+
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    margin-top: 20px;
 }
 
 .tarjeta p {
     color: #0b1994;
 }
 
+/* ========================= */
+/* FORMULARIOS */
+/* ========================= */
+
 .formulario {
     margin-top: 20px;
+
     background: rgb(255, 255, 255);
+
     padding: 20px;
+
     border-radius: 10px;
+
     border: 1px solid #afd6fc;
-    width: 900px;
+
+    width: 100%;
+
+    max-width: 900px;
+
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+/* Título formulario */
+
 .formulario h3 {
-    font-size: 30px;
+    font-size: clamp(22px, 4vw, 30px);
+
     color: #000e8f;
+
+    margin-bottom: 10px;
 }
+
+/* Texto */
 
 .formulario p {
-    color: #b8b8b8;
+    color: #6d6d6d;
+
+    margin-bottom: 10px;
 }
 
+/* Labels */
+
 .formulario label {
-    font-size: 25px;
+    font-size: clamp(16px, 3vw, 24px);
+}
+
+/* Inputs */
+
+.formulario input[type="file"] {
+    width: 100%;
+
+    min-height: 45px;
+
+    border: 1px solid #afd6fc;
+
+    border-radius: 5px;
+
+    padding: 10px;
+
+    margin-top: 10px;
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media screen and (max-width: 768px) {
+
+    .header {
+        height: 70px;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    .contenido {
+        margin-top: 90px;
+        padding: 15px;
+    }
+
+    .cont-menu {
+        max-width: 230px;
+    }
+
+    .cont-menu nav {
+        margin-top: 80px;
+    }
+
+    .cont-menu nav a {
+        padding: 18px;
+    }
+
+    .formulario,
+    .tarjeta {
+        padding: 15px;
+    }
+}
+
+/* ========================= */
+/* CELULARES PEQUEÑOS */
+/* ========================= */
+
+@media screen and (max-width: 480px) {
+
+    .contenido {
+        padding: 10px;
+    }
+
+    .formulario,
+    .tarjeta {
+        padding: 12px;
+        border-radius: 8px;
+    }
+
+    .cont-menu {
+        max-width: 200px;
+    }
+
+    .cont-menu nav a {
+        font-size: 16px;
+        padding: 15px;
+    }
 }
