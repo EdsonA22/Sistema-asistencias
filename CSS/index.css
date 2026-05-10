@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background: transparent;
+    backdrop-filter: blur(15px);
+    background-size: contain;
+    box-shadow: 0 0 10px rgba(79, 161, 255, 0.2);
+    color: #ffffff;
+}
+
+img.logo {
+    width: 135px;
+    height: auto;
+    align-items: center;
+
+}
+
+body {
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url(../Imagenes/canchaUV.webp);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+h1 {
+    font-size: 45px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h3 {
+    display: flex;
+    font-size: 30px;
+    color: #292929;
+    margin-bottom: 10px;
+}
+
+button.login {
+    width: 250px;
+    height: auto;
+    top: 30px;
+    right: 30px;
+    padding: 10px 20px;
+    font-size: 26px;
+    background-color: #00aeff;
+    color: #fff;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+input.buscador {
+    width: 50%;
+    height: 50px;
+    justify-content: center;
+    border: 1px solid #000000;
+    border-radius: 15px;
+    outline: none;
+    font-size: 25px;
+    padding: 10px 20px;
+}
+
+button.buscar {
+    width: 20%;
+    height: 75px;
+    border: none;
+    outline: none;
+    border-radius: 15px;
+    background: #00529e;
+    color: #fff;
+    font-size: 30px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.info {
+    font-size: 28px;
+    text-align: left;
+    margin: 20px auto;
+    width: 200px;
+    background-color: #fff;
+    align-items: self-start;
+}
+
+.info th {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px;
+    width: 150px;
+}
+
+button.entrada {
+    width: 35%;
+    height: 95px;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #00af35;
+    color: #fff;
+    font-size: 45px;
+    font-weight: 600;
+    cursor: pointer;
+    align-items: center;
+    display: block;
+    margin: 10px auto;
+}
+
+button.salida {
+    width: 35%;
+    height: 95px;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #ff0000;
+    color: #fff;
+    font-size: 45px;
+    font-weight: 600;
+    cursor: pointer;
+    align-items: center;
+    display: block;
+    margin: 10px auto;
+}
+
+button.reporte {
+    width: 30%;
+    height: 80px;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #5a5a5a;
+    color: #fff;
+    font-size: 35px;
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    margin: 50px auto;
+}
+
+.contenedor {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 90px;
+}
+
+.registro #qrcode {
+    width: 260px;
+    height: 260px;
+    margin-top: 15px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 50px;
+}
