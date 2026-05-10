@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido!!!</title>
     <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="../CSS/user.css" />
@@ -54,7 +55,7 @@
             <p>En caso de tener dificultades para realizar tu registro, puedes registrar tu asistencia manualmente en la
                 pagina donde escaneas tu código QR.</p><br>
             <div id="reader" width="600px" height="600px"></div>
-            <input type="file" id="qr-input-file" accept="image/*">
+            <label for="qr-input-file">Seleccionar imagen QR</label><br>
             <input type="file" id="qr-input-file" accept="image/*" capture>
             <script src="../JS/QRScanner.js"></script>
 
