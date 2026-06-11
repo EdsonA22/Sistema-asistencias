@@ -1,38 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../CSS/index.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../CSS/index.css" />
     <script type="text/javascript" src="../JS/jquery.min.js"></script>
     <script type="text/javascript" src="../JS/QR.js"></script>
     <title>Seguimiento de asistencia</title>
-</head>
-<header class="header">
-    <a href="https://www.uv.mx/daduv/seccion/academias-deportivas/"><img src="../Imagenes/Logo halcones.png"
-            class="logo"></a>
+  </head>
+  <header class="header">
+    <a href="https://www.uv.mx/daduv/seccion/academias-deportivas/"
+      ><img src="../Imagenes/Logo halcones.png" class="logo"
+    /></a>
     <h1>Seguimiento de Asistencias de la academia Halcones</h1>
     <nav>
-        <button name="login" class="login" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+      <button
+        name="login"
+        class="login"
+        onclick="window.location.href = 'login.html'"
+      >
+        Iniciar Sesión
+      </button>
     </nav>
-</header>
+  </header>
 
-<body>
+  <body>
     <div class="contenedor">
-        <h3>Escribe tu ID:</h3>
-        <input type="search" name="buscador" class="buscador" placeholder="ABC1234">
-        <button name="buscar" class="buscar">Buscar</button><br><br>
-    </div><br>
+      <h3>Escribe tu ID:</h3>
+      <input
+        type="search"
+        name="buscador"
+        class="buscador"
+        placeholder="ABC1234"
+      />
+      <button name="buscar" class="buscar">Buscar</button><br /><br />
+    </div>
+    <br />
 
     <div class="Registro">
-        <h2>Fecha: </h2>
-        <h2>Hora: </h2>
-        <input id="text" type="text" style="width:30%" /><br />
-        <div id="qrcode"></div>
-
-        <script type="text/javascript" src="../JS/ContenidoQR.js"></script>
+      <h2>
+        Hola entrenador, registra tu asistencia y salida por medio de este
+        código QR
+      </h2>
+      <input id="text" type="text" style="width: 30%" /><br />
+      <div id="qrcode"></div>
+      <script type="text/javascript" src="../JS/ContenidoQR.js"></script>
     </div>
-</body>
-
+  </body>
 </html>

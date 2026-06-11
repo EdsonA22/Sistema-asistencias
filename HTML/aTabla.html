@@ -1,43 +1,100 @@
 <!doctype html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <title>Bienvenido!!!</title>
-    <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabla de Asistencias - Admin</title>
+    <link
+      href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../CSS/admin.css" />
-</head>
+  </head>
 
-<body>
-
-    <header class="header">
-        <div class="container">
-            <div class="btn-menu">
-                <label for="btn-menu" class="bx bx-menu-close"></label>
-            </div>
-            <div class="logo">
-                <h1>Bienvenido administrador</h1>
-            </div>
-            <nav class="menu">
-                <a href="login.html" class="cerrar">Cerrar sesión</a>
-            </nav>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">
+            <i class="bx bx-shield-quarter" style="font-size: 24px"></i>
+          </div>
+          <div>
+            <h1>Admin</h1>
+            <p>Sistema de Asistencias</p>
+          </div>
         </div>
-    </header>
+        <nav class="nav">
+          <a href="admin.html"><i class="bx bx-home"></i> Inicio</a>
+          <a href="aEntrenadores.html"
+            ><i class="bx bx-group"></i> Entrenadores</a
+          >
+          <a href="aCrearUsuar.html"
+            ><i class="bx bx-user-plus"></i> Crear usuarios</a
+          >
+          <a href="aTabla.html" class="active"
+            ><i class="bx bx-table"></i> Tabla de asistencias</a
+          >
+        </nav>
+        <a href="login.html" class="logout"
+          ><i class="bx bx-log-out"></i> Cerrar sesión</a
+        >
+      </aside>
 
-    <div class="capa"></div>
-    <input type="checkbox" id="btn-menu" />
-    <div class="container-menu">
-        <div class="cont-menu">
-            <nav>
-                <a href="admin.html">Inicio</a>
-                <a href="aEntrenadores.html">Entrenadores</a>
-                <a href="aCrearUsuar.html">Crear usuarios</a>
-                <a href="aTabla.html">Tabla de asistencias</a>
-                <a href="aReportes.html">Reportes</a>
-            </nav>
-            <label for="btn-menu" class="bx bx-x-circle"></label>
+      <main class="main">
+        <div class="page-header">
+          <div>
+            <h2>Bitácora General de Asistencias</h2>
+            <p class="muted">
+              Visualización detallada de registros diarios del sistema
+            </p>
+          </div>
         </div>
+
+        <div class="card" style="padding: 0; overflow-x: auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre del Entrenador</th>
+                <th>Hora de Entrada</th>
+                <th>Hora de Salida</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Juan Pérez</td>
+                <td>03:30 PM</td>
+                <td>05:00 PM</td>
+                <td>
+                  <span
+                    class="badge warning"
+                    style="background: #ffe8e8; color: #c0992f"
+                    >Ausente</span
+                  >
+                </td>
+              </tr>
+              <tr>
+                <td>Juan Perez 2</td>
+                <td>03:30 PM</td>
+                <td>--:-- --</td>
+                <td><span class="badge">Presente</span></td>
+              </tr>
+              <tr>
+                <td>Juan Perez 3</td>
+                <td>--:-- --</td>
+                <td>--:-- --</td>
+                <td>
+                  <span
+                    class="badge warning"
+                    style="background: #ffe8e8; color: #ff1909"
+                    >Falta</span
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </main>
     </div>
-</body>
-
+  </body>
 </html>

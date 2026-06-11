@@ -1,43 +1,100 @@
 <!doctype html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reportes - Admin</title>
+    <link
+      href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/admin.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Bienvenido!!!</title>
-  <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="../CSS/admin.css" />
-</head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="brand-mark">
+            <i class="bx bx-shield-quarter" style="font-size: 24px"></i>
+          </div>
+          <div>
+            <h1>Administrador</h1>
+            <p>Sistema de Asistencias</p>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="admin.html"><i class="bx bx-home"></i> Inicio</a>
+          <a href="aEntrenadores.html"
+            ><i class="bx bx-group"></i> Entrenadores</a
+          >
+          <a href="aCrearUsuar.html"
+            ><i class="bx bx-user-plus"></i> Crear usuarios</a
+          >
+          <a href="aTabla.html"
+            ><i class="bx bx-table"></i> Tabla de asistencias</a
+          >
+        </nav>
+        <a href="login.html" class="logout"
+          ><i class="bx bx-log-out"></i> Cerrar sesión</a
+        >
+      </aside>
 
-<body>
+      <main class="main">
+        <div class="page-header">
+          <div>
+            <h2>Bienvenido administrador</h2>
+            <p class="muted">Estadísticas del dia y reportes generales</p>
+          </div>
+          <button class="btn">
+            <i class="bx bx-cloud-download"></i> Exportar Datos
+          </button>
+        </div>
 
-  <header class="header">
-    <div class="container">
-      <div class="btn-menu">
-        <label for="btn-menu" class="bx bx-menu-close"></label>
-      </div>
-      <div class="logo">
-        <h1>Bienvenido administrador</h1>
-      </div>
-      <nav class="menu">
-        <a href="login.html" class="cerrar">Cerrar sesión</a>
-      </nav>
+        <div class="grid three" style="margin-bottom: 24px">
+          <div class="card">
+            <div class="metric">
+              <strong>94.2%</strong>
+              <span>Asistencia General</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="metric">
+              <strong>245</strong>
+              <span>Usuarios Registrados</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="metric">
+              <strong>15</strong>
+              <span>Sesiones Hoy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <h3>Asistencias por Estatus</h3>
+            <div class="donut"></div>
+            <p class="footer-note" style="text-align: center">
+              Azul: Presente | Verde: Justificado | Amarillo: Retardo | Rojo:
+              Falta
+            </p>
+          </div>
+
+          <div class="card">
+            <h3>Concurrencia Semanal</h3>
+            <div class="trend">
+              <div style="height: 85%">Lun</div>
+              <div style="height: 90%">Mar</div>
+              <div style="height: 95%">Mié</div>
+              <div style="height: 75%">Jue</div>
+              <div style="height: 88%">Vie</div>
+              <div style="height: 40%">Sáb</div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
-  </header>
-
-  <div class="capa"></div>
-  <input type="checkbox" id="btn-menu" />
-  <div class="container-menu">
-    <div class="cont-menu">
-      <nav>
-        <a href="admin.html">Inicio</a>
-        <a href="aEntrenadores.html">Entrenadores</a>
-        <a href="aCrearUsuar.html">Crear usuarios</a>
-        <a href="aTabla.html">Tabla de asistencias</a>
-        <a href="aReportes.html">Reportes</a>
-      </nav>
-      <label for="btn-menu" class="bx bx-x-circle"></label>
-    </div>
-  </div>
-</body>
-
+  </body>
 </html>
