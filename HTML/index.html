@@ -1,50 +1,73 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seguimiento de Asistencia - Halcones</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../CSS/index.css" />
     <script type="text/javascript" src="../JS/jquery.min.js"></script>
     <script type="text/javascript" src="../JS/QR.js"></script>
-    <title>Seguimiento de asistencia</title>
   </head>
-  <header class="header">
-    <a href="https://www.uv.mx/daduv/seccion/academias-deportivas/"
-      ><img src="../Imagenes/Logo halcones.png" class="logo"
-    /></a>
-    <h1>Seguimiento de Asistencias de la academia Halcones</h1>
-    <nav>
-      <button
-        name="login"
-        class="login"
-        onclick="window.location.href = 'login.html'"
-      >
-        Iniciar Sesión
-      </button>
-    </nav>
-  </header>
 
   <body>
-    <div class="contenedor">
-      <h3>Escribe tu ID:</h3>
-      <input
-        type="search"
-        name="buscador"
-        class="buscador"
-        placeholder="ABC1234"
-      />
-      <button name="buscar" class="buscar">Buscar</button><br /><br />
-    </div>
-    <br />
+    <header class="header">
+      <a
+        href="https://www.uv.mx/daduv/seccion/academias-deportivas/"
+        class="logo-link"
+      >
+        <img
+          src="../Imagenes/Logo halcones.png"
+          alt="Logo Halcones"
+          class="logo"
+        />
+      </a>
+      <h1>Academia Halcones</h1>
+      <nav>
+        <button
+          name="login"
+          class="btn-login"
+          onclick="window.location.href = 'login.html'"
+        >
+          Iniciar Sesión
+        </button>
+      </nav>
+    </header>
 
-    <div class="Registro">
-      <h2>
-        Hola entrenador, registra tu asistencia y salida por medio de este
-        código QR
-      </h2>
-      <input id="text" type="text" style="width: 30%" /><br />
-      <div id="qrcode"></div>
-      <script type="text/javascript" src="../JS/ContenidoQR.js"></script>
-    </div>
+    <main class="main-content">
+      <section class="card search-section">
+        <h3>Ingresa tu ID Deportivo</h3>
+        <div class="search-box">
+          <input
+            type="search"
+            id="text"
+            name="buscador"
+            class="buscador"
+            placeholder="Ej. ABC1234"
+          />
+          <button name="buscar" class="btn-buscar">Generar Código</button>
+        </div>
+      </section>
+
+      <section class="card qr-section">
+        <div class="info-datetime">
+          <h2 id="fecha-actual">Fecha: --/--/----</h2>
+          <h2 id="hora-actual">Hora: --:--</h2>
+        </div>
+
+        <div class="qr-container">
+          <div id="qrcode"></div>
+        </div>
+        <p class="muted-text">
+          Muestra este código frente al escáner para registrar tu asistencia
+        </p>
+      </section>
+    </main>
+
+    <script type="text/javascript" src="../JS/CrearQR.js"></script>
+    <script type="text/javascript" src="../JS/FechaHora.js"></script>
   </body>
 </html>

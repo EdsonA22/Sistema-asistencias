@@ -1,171 +1,231 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 50px;
-    background: transparent;
-    backdrop-filter: blur(15px);
-    background-size: contain;
-    box-shadow: 0 0 10px rgba(79, 161, 255, 0.2);
-    color: #ffffff;
-}
-
-img.logo {
-    width: 135px;
-    height: auto;
-    align-items: center;
-
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", Arial, sans-serif;
 }
 
 body {
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-image: url(../Imagenes/canchaUV.webp);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  min-height: 100vh;
+  /* Se añade una capa oscura semitransparente sobre la cancha para mejor contraste */
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.47), rgba(11, 45, 115, 0.75)),
+    url("../Imagenes/canchaUV.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  color: #172033;
 }
 
-h1 {
-    font-size: 45px;
-    color: #ffffff;
-    margin-bottom: 20px;
-    text-align: center;
+/* HEADER EFECTO CRISTAL (GLASSMORPHISM) */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
 }
 
-h3 {
-    display: flex;
-    font-size: 30px;
-    color: #292929;
-    margin-bottom: 10px;
+.logo-link {
+  display: flex;
+  align-items: center;
 }
 
-button.login {
+.logo {
+  width: 110px;
+  height: auto;
+}
+
+.header h1 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 48px;
+  color: #2e18ef;
+  font-weight: 800;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.btn-login {
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  background-color: #00aeff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 174, 255, 0.3);
+}
+
+.btn-login:hover {
+  background-color: #008ecc;
+  transform: translateY(-2px);
+}
+
+/* CONTENEDOR PRINCIPAL */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  padding: 40px 20px;
+}
+
+/* TARJETAS BLANCAS MODERNAS */
+.card {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 30px 40px;
+  width: 100%;
+  max-width: 650px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+/* SECCIÓN DE BÚSQUEDA */
+.search-section h3 {
+  font-size: 24px;
+  color: #0b2d73; /* Azul corporativo que usas en admin.css */
+  margin-bottom: 20px;
+  font-weight: 800;
+}
+
+.search-box {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.buscador {
+  flex: 1;
+  height: 54px;
+  border: 2px solid #dce5f2;
+  border-radius: 8px;
+  outline: none;
+  font-size: 18px;
+  padding: 10px 20px;
+  transition: border-color 0.3s ease;
+}
+
+.buscador:focus {
+  border-color: #00aeff;
+}
+
+.btn-buscar {
+  height: 54px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 8px;
+  background: #0b2d73;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-buscar:hover {
+  background: #1554d1;
+}
+
+/* SECCIÓN DEL QR */
+.qr-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-datetime {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 2px solid #eaf2ff;
+}
+
+.info-datetime h2 {
+  font-size: 20px;
+  color: #5e6c84;
+  font-weight: 600;
+}
+
+/* CONTENEDOR DEL QR MÁS GRANDE */
+.qr-container {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  border: 3px dashed #1554d1;
+  display: inline-block;
+  margin-bottom: 18px;
+}
+
+#qrcode {
+  /* Aquí definimos el tamaño expandido */
+  width: 350px;
+  height: 350px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+/* Forzamos a la imagen/canvas del QR a llenar el nuevo tamaño */
+#qrcode img,
+#qrcode canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.muted-text {
+  color: #5e6c84;
+  font-size: 15px;
+  margin-top: 10px;
+}
+
+/* RESPONSIVE PARA DISPOSITIVOS MÓVILES */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .btn-buscar {
+    width: 100%;
+  }
+
+  #qrcode {
     width: 250px;
-    height: auto;
-    top: 30px;
-    right: 30px;
-    padding: 10px 20px;
-    font-size: 26px;
-    background-color: #00aeff;
-    color: #fff;
-    border-radius: 15px;
-    cursor: pointer;
-}
+    height: 250px;
+  }
 
-input.buscador {
-    width: 50%;
-    height: 50px;
-    justify-content: center;
-    border: 1px solid #000000;
-    border-radius: 15px;
-    outline: none;
-    font-size: 25px;
-    padding: 10px 20px;
-}
+  .card {
+    padding: 20px;
+  }
 
-button.buscar {
-    width: 20%;
-    height: 75px;
-    border: none;
-    outline: none;
-    border-radius: 15px;
-    background: #00529e;
-    color: #fff;
-    font-size: 30px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.info {
-    font-size: 28px;
-    text-align: left;
-    margin: 20px auto;
-    width: 200px;
-    background-color: #fff;
-    align-items: self-start;
-}
-
-.info th {
-    background-color: #ffffff;
-    color: #000000;
-    padding: 10px;
-    width: 150px;
-}
-
-button.entrada {
-    width: 35%;
-    height: 95px;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: #00af35;
-    color: #fff;
-    font-size: 45px;
-    font-weight: 600;
-    cursor: pointer;
-    align-items: center;
-    display: block;
-    margin: 10px auto;
-}
-
-button.salida {
-    width: 35%;
-    height: 95px;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: #ff0000;
-    color: #fff;
-    font-size: 45px;
-    font-weight: 600;
-    cursor: pointer;
-    align-items: center;
-    display: block;
-    margin: 10px auto;
-}
-
-button.reporte {
-    width: 30%;
-    height: 80px;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: #5a5a5a;
-    color: #fff;
-    font-size: 35px;
-    font-weight: 600;
-    cursor: pointer;
-    display: block;
-    margin: 50px auto;
-}
-
-.contenedor {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 90px;
-}
-
-.registro #qrcode {
-    width: 260px;
-    height: 260px;
-    margin-top: 15px;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-top: 50px;
+  .info-datetime {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
