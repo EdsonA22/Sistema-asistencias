@@ -171,8 +171,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   border: 1px solid #afd6fc;
-  width: 100%; /* CAMBIO AQUÍ */
-  max-width: 900px; /* NUEVO */
+  width: 900px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -181,8 +180,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   border: 1px solid #afd6fc;
-  width: 100%; /* CAMBIO AQUÍ */
-  max-width: 900px; /* NUEVO */
+  width: 900px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -211,53 +209,4 @@ body {
 
 .formulario label {
   font-size: 25px;
-}
-
-@media screen and (max-width: 768px) {
-  /* Ajustes del encabezado (Igual que en admin) */
-  .container {
-    padding: 0 15px;
-  }
-  .btn-menu label {
-    font-size: 50px;
-  }
-  .logo h1 {
-    font-size: 25px;
-  }
-  .menu a {
-    font-size: 20px;
-  }
-  .cont-menu {
-    max-width: 200px;
-  }
-  .cont-menu nav a {
-    font-size: 20px;
-    padding: 20px;
-  }
-  .cont-menu label {
-    font-size: 40px;
-    right: 20px;
-    top: 10px;
-  }
-
-  /* Corrección principal del contenido */
-  .contenido {
-    margin-left: 0; /* En móviles quitamos el espacio de 450px de la izquierda */
-    margin-top: 100px;
-    padding: 15px;
-  }
-
-  /* Reducción de textos para que sean legibles en móvil */
-  .contenido h2 {
-    font-size: 32px;
-  }
-  .contenido p {
-    font-size: 16px;
-  }
-  .formulario h3 {
-    font-size: 24px;
-  }
-  .formulario label {
-    font-size: 18px;
-  }
 }

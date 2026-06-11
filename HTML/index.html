@@ -1,69 +1,38 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../CSS/index.css" />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/index.css">
     <script type="text/javascript" src="../JS/jquery.min.js"></script>
     <script type="text/javascript" src="../JS/QR.js"></script>
     <title>Seguimiento de asistencia</title>
-  </head>
+</head>
+<header class="header">
+    <a href="https://www.uv.mx/daduv/seccion/academias-deportivas/"><img src="../Imagenes/Logo halcones.png"
+            class="logo"></a>
+    <h1>Seguimiento de Asistencias de la academia Halcones</h1>
+    <nav>
+        <button name="login" class="login" onclick="window.location.href='login.html'">Iniciar Sesión</button>
+    </nav>
+</header>
 
-  <body>
-    <header class="header">
-      <a href="https://www.uv.mx/daduv/seccion/academias-deportivas/">
-        <img
-          src="../Imagenes/Logo halcones.png"
-          class="logo"
-          alt="Logo Halcones"
-        />
-      </a>
-      <h1>Seguimiento de Asistencias de la academia Halcones</h1>
-      <nav>
-        <button
-          name="login"
-          class="login"
-          onclick="window.location.href = 'login.html'"
-        >
-          Iniciar Sesión
-        </button>
-      </nav>
-    </header>
-
-    <main>
-      <div class="contenedor">
+<body>
+    <div class="contenedor">
         <h3>Escribe tu ID:</h3>
-        <input
-          type="search"
-          name="buscador"
-          class="buscador"
-          placeholder="ABC1234"
-        />
-        <button name="buscar" class="buscar">Buscar</button><br /><br />
-      </div>
-      <br />
+        <input type="search" name="buscador" class="buscador" placeholder="ABC1234">
+        <button name="buscar" class="buscar">Buscar</button><br><br>
+    </div><br>
 
-      <div class="registro">
-        <h2>Fecha: <span id="fecha-actual"></span></h2>
-        <h2>Hora: <span id="hora-actual"></span></h2>
-
-        <div class="buttons">
-          <button name="entrada" class="entrada">Entrada</button>
-          <button name="salida" class="salida">Salida</button>
-        </div>
-
-        <br />
-        <input
-          id="text"
-          type="text"
-          placeholder="Ingresa datos para el QR"
-          style="width: 80%; max-width: 300px; padding: 10px; font-size: 18px"
-        /><br />
-
+    <div class="Registro">
+        <h2>Fecha: </h2>
+        <h2>Hora: </h2>
+        <input id="text" type="text" style="width:30%" /><br />
         <div id="qrcode"></div>
 
         <script type="text/javascript" src="../JS/ContenidoQR.js"></script>
-      </div>
-    </main>
-  </body>
+    </div>
+</body>
+
 </html>

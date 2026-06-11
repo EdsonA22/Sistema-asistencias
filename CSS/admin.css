@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Fondo */
@@ -71,7 +71,8 @@ body {
 .menu a {
   color: #fff;
   font-size: 50px;
-  text-decoration: underline;
+  text-decoration: none;
+
 }
 
 /* MENÚ LATERAL */
@@ -93,7 +94,7 @@ body {
 }
 
 /* Mostrar menú */
-#btn-menu:checked ~ .container-menu {
+#btn-menu:checked~.container-menu {
   opacity: 1;
   visibility: visible;
 }
@@ -110,7 +111,7 @@ body {
 }
 
 /* Animación apertura */
-#btn-menu:checked ~ .container-menu .cont-menu {
+#btn-menu:checked~.container-menu .cont-menu {
   transform: translateX(0%);
 }
 
@@ -121,6 +122,7 @@ body {
 
 /* Links del menú */
 .cont-menu nav a {
+
   position: relative;
   display: block;
   text-decoration: none;
@@ -145,35 +147,4 @@ body {
   color: #fff;
   cursor: pointer;
   font-size: 55px;
-}
-
-@media screen and (max-width: 768px) {
-  .container {
-    padding: 0 15px; /* Evita que el menú toque los bordes */
-  }
-  /* Reducir el tamaño de los iconos y textos del encabezado */
-  .btn-menu label {
-    font-size: 50px;
-  }
-  .logo h1 {
-    font-size: 25px;
-  }
-  .menu a {
-    font-size: 20px;
-  }
-
-  /* Ajustes del menú lateral para que no abarque todo */
-  .cont-menu {
-    max-width: 200px;
-  }
-  .cont-menu nav a {
-    font-size: 20px;
-    padding: 20px;
-  }
-  /* Posicionar correctamente el botón de "cerrar menú" (X) */
-  .cont-menu label {
-    font-size: 40px;
-    right: 20px;
-    top: 10px;
-  }
 }

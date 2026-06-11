@@ -2,7 +2,6 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bienvenido!!!</title>
     <link
       href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css"
@@ -69,11 +68,8 @@
           código QR.
         </p>
         <br />
-        <div
-          id="reader"
-          style="width: 100%; max-width: 600px; margin: 0 auto"
-        ></div>
-        <label for="qr-input-file">Abrir cámara y escanear QR:</label><br />
+        <div id="reader" width="600px" height="600px"></div>
+        <input type="file" id="qr-input-file" accept="image/*" />
         <input type="file" id="qr-input-file" accept="image/*" capture />
         <script src="../JS/QRScanner.js"></script>
       </div>
