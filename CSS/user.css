@@ -1,382 +1,263 @@
-/* ========================= */
-/* RESET GENERAL */
-/* ========================= */
-
+/* Reset general */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* ========================= */
-/* BODY */
-/* ========================= */
-
+/* Fondo */
 body {
-    background-image: url("../Imagenes/canchaUV.webp");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: scroll;
-    min-height: 100vh;
+  background-image: url("../Imagenes/canchaUV.webp");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
-/* ========================= */
-/* CAPA OSCURA */
-/* ========================= */
-
+/* Capa oscura sobre el fondo */
 .capa {
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: -1;
-    top: 0;
-    left: 0;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+  top: 0;
+  left: 0;
 }
 
-/* ========================= */
-/* HEADER */
-/* ========================= */
+/* ENCABEZADO */
 
 .header {
-    width: 100%;
-    height: 90px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 100;
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 /* Contenedor del header */
-
 .container {
-    width: 100%;
-    max-width: 1700px;
-    margin: auto;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
+  width: 100%;
+  max-width: 1700px;
+  margin: auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* ========================= */
-/* BOTÓN MENÚ */
-/* ========================= */
-
+/* Icono del menú */
 .btn-menu label {
-    color: #fff;
-    font-size: clamp(35px, 5vw, 70px);
-    cursor: pointer;
+  color: #fff;
+  font-size: 100px;
+  cursor: pointer;
 }
 
-/* ========================= */
-/* LOGO */
-/* ========================= */
-
+/* Título */
 .logo {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .logo h1 {
-    color: #fff;
-    font-weight: 400;
-    font-size: clamp(20px, 4vw, 45px);
-    margin-left: 10px;
+  color: #fff;
+  font-weight: 400;
+  font-size: 45px;
+  margin-left: 10px;
 }
 
-/* ========================= */
-/* BOTÓN CERRAR SESIÓN */
-/* ========================= */
-
+/* Botón cerrar sesión */
 .menu a {
-    color: #fff;
-    font-size: clamp(20px, 4vw, 40px);
-    text-decoration: underline;
-    border: black;
+  color: #fff;
+  font-size: 50px;
+  text-decoration: none;
 }
 
-/* ========================= */
 /* MENÚ LATERAL */
-/* ========================= */
 
 #btn-menu {
-    display: none;
+  display: none;
 }
 
-/* Fondo oscuro */
-
 .container-menu {
-    position: fixed;
-    background: rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
-
-    transition: all 500ms ease;
-
-    opacity: 0;
-    visibility: hidden;
-
-    z-index: 200;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  transition: all 500ms ease;
+  opacity: 0;
+  visibility: hidden;
 }
 
 /* Mostrar menú */
-
-#btn-menu:checked~.container-menu {
-    opacity: 1;
-    visibility: visible;
+#btn-menu:checked ~ .container-menu {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Panel lateral */
-
 .cont-menu {
-    width: 100%;
-    max-width: 280px;
-    background: #0414a5;
-    height: 100vh;
-    position: relative;
-
-    transition: all 500ms ease;
-
-    transform: translateX(-100%);
+  width: 100%;
+  max-width: 250px;
+  background: #0414a5;
+  height: 100vh;
+  position: relative;
+  transition: all 500ms ease;
+  transform: translateX(-100%);
 }
 
 /* Animación apertura */
-
-#btn-menu:checked~.container-menu .cont-menu {
-    transform: translateX(0%);
+#btn-menu:checked ~ .container-menu .cont-menu {
+  transform: translateX(0%);
 }
 
-/* Navegación */
-
+/* Navegación del menú */
 .cont-menu nav {
-    transform: translateY(13%);
+  transform: translateY(13%);
 }
 
-/* Links */
-
+/* Links del menú */
 .cont-menu nav a {
-    position: relative;
-    display: block;
-    text-decoration: none;
-
-    font-size: clamp(18px, 3vw, 28px);
-
-    padding: 50px;
-
-    color: #c7c7c7;
-
-    border-left: 5px solid transparent;
-
-    transition: all 400ms ease;
+  position: relative;
+  display: block;
+  text-decoration: none;
+  font-size: 30px;
+  padding: 33px;
+  color: #c7c7c7;
+  border-left: 5px solid transparent;
+  transition: all 400ms ease;
 }
 
 /* Hover */
-
 .cont-menu nav a:hover {
-    border-left: 5px solid #c7c7c7;
-    background: #501900;
+  border-left: 5px solid #c7c7c7;
+  background: #501900;
 }
 
 /* Botón cerrar menú */
-
 .cont-menu label {
-    position: fixed;
-    right: 40%;
-    top: 20px;
-
-    color: #fff;
-    cursor: pointer;
-
-    font-size: clamp(30px, 5vw, 50px);
+  position: fixed;
+  right: 90px;
+  top: 15px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 55px;
 }
-
-/* ========================= */
-/* CONTENIDO */
-/* ========================= */
 
 .contenido {
-    width: 100%;
-
-    max-width: 1200px;
-
-    margin: auto;
-
-    padding: 20px;
-
-    margin-top: 110px;
+  margin-left: 450px;
+  /* espacio para el menú */
+  padding: 20px;
+  margin-top: 100px;
 }
-
-/* Títulos */
 
 .contenido h2 {
-    color: #ffffff;
-
-    margin-bottom: 20px;
-
-    font-size: clamp(28px, 5vw, 50px);
+  color: #ffffff;
+  margin-bottom: 20px;
+  font-size: 50px;
 }
-
-/* Texto */
 
 .contenido p {
-    font-size: clamp(16px, 2vw, 22px);
-
-    color: #ffffff;
+  font-size: 20px;
+  color: #ffffff;
 }
 
-/* ========================= */
-/* TARJETAS */
-/* ========================= */
+.formulario {
+  margin-top: 20px;
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #afd6fc;
+  width: 100%; /* CAMBIO AQUÍ */
+  max-width: 900px; /* NUEVO */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
 .tarjeta {
-    background: rgb(226, 242, 255);
-
-    padding: 20px;
-
-    border-radius: 10px;
-
-    border: 1px solid #afd6fc;
-
-    width: 100%;
-
-    max-width: 900px;
-
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-
-    margin-top: 20px;
+  background: rgb(226, 242, 255);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #afd6fc;
+  width: 100%; /* CAMBIO AQUÍ */
+  max-width: 900px; /* NUEVO */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .tarjeta p {
-    color: #0b1994;
+  color: #0b1994;
 }
-
-/* ========================= */
-/* FORMULARIOS */
-/* ========================= */
 
 .formulario {
-    margin-top: 20px;
-
-    background: rgb(255, 255, 255);
-
-    padding: 20px;
-
-    border-radius: 10px;
-
-    border: 1px solid #afd6fc;
-
-    width: 100%;
-
-    max-width: 900px;
-
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #afd6fc;
+  width: 900px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
-/* Título formulario */
 
 .formulario h3 {
-    font-size: clamp(22px, 4vw, 30px);
-
-    color: #000e8f;
-
-    margin-bottom: 10px;
+  font-size: 30px;
+  color: #000e8f;
 }
-
-/* Texto */
 
 .formulario p {
-    color: #6d6d6d;
-
-    margin-bottom: 10px;
+  color: #b8b8b8;
 }
-
-/* Labels */
 
 .formulario label {
-    font-size: clamp(16px, 3vw, 24px);
+  font-size: 25px;
 }
-
-/* Inputs */
-
-.formulario input[type="file"] {
-    width: 100%;
-
-    min-height: 45px;
-
-    border: 1px solid #afd6fc;
-
-    border-radius: 5px;
-
-    padding: 10px;
-
-    margin-top: 10px;
-}
-
-/* ========================= */
-/* RESPONSIVE */
-/* ========================= */
 
 @media screen and (max-width: 768px) {
+  /* Ajustes del encabezado (Igual que en admin) */
+  .container {
+    padding: 0 15px;
+  }
+  .btn-menu label {
+    font-size: 50px;
+  }
+  .logo h1 {
+    font-size: 25px;
+  }
+  .menu a {
+    font-size: 20px;
+  }
+  .cont-menu {
+    max-width: 200px;
+  }
+  .cont-menu nav a {
+    font-size: 20px;
+    padding: 20px;
+  }
+  .cont-menu label {
+    font-size: 40px;
+    right: 20px;
+    top: 10px;
+  }
 
-    .header {
-        height: 70px;
-    }
+  /* Corrección principal del contenido */
+  .contenido {
+    margin-left: 0; /* En móviles quitamos el espacio de 450px de la izquierda */
+    margin-top: 100px;
+    padding: 15px;
+  }
 
-    .container {
-        padding: 0 15px;
-    }
-
-    .contenido {
-        margin-top: 90px;
-        padding: 15px;
-    }
-
-    .cont-menu {
-        max-width: 230px;
-    }
-
-    .cont-menu nav {
-        margin-top: 80px;
-    }
-
-    .cont-menu nav a {
-        padding: 18px;
-    }
-
-    .formulario,
-    .tarjeta {
-        padding: 15px;
-    }
-}
-
-/* ========================= */
-/* CELULARES PEQUEÑOS */
-/* ========================= */
-
-@media screen and (max-width: 480px) {
-
-    .contenido {
-        padding: 10px;
-    }
-
-    .formulario,
-    .tarjeta {
-        padding: 12px;
-        border-radius: 8px;
-    }
-
-    .cont-menu {
-        max-width: 200px;
-    }
-
-    .cont-menu nav a {
-        font-size: 16px;
-        padding: 15px;
-    }
+  /* Reducción de textos para que sean legibles en móvil */
+  .contenido h2 {
+    font-size: 32px;
+  }
+  .contenido p {
+    font-size: 16px;
+  }
+  .formulario h3 {
+    font-size: 24px;
+  }
+  .formulario label {
+    font-size: 18px;
+  }
 }

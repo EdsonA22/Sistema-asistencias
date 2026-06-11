@@ -1,66 +1,82 @@
 <!doctype html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bienvenido!!!</title>
-    <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link
+      href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../CSS/user.css" />
-</head>
+  </head>
 
-<body>
-
+  <body>
     <header class="header">
-        <div class="container">
-            <div class="btn-menu">
-                <label for="btn-menu" class="bx bx-menu-close"></label>
-            </div>
-            <div class="logo">
-                <h1>Bienvenido entrenador</h1>
-            </div>
-            <nav class="menu">
-                <a href="login.html" class="cerrar">Cerrar sesión</a>
-            </nav>
+      <div class="container">
+        <div class="btn-menu">
+          <label for="btn-menu" class="bx bx-menu-close"></label>
         </div>
+        <div class="logo">
+          <h1>Bienvenido entrenador</h1>
+        </div>
+        <nav class="menu">
+          <a href="login.html" class="cerrar">Cerrar sesión</a>
+        </nav>
+      </div>
     </header>
 
     <div class="capa"></div>
     <input type="checkbox" id="btn-menu" />
     <div class="container-menu">
-        <div class="cont-menu">
-            <nav>
-                <a href="user.html">Inicio</a>
-                <a href="uAsistencia.html">Asistencias</a>
-                <a href="uInfo.html">Información del usuario</a>
-                <a href="uReporte.html">Reportes</a>
-            </nav>
-            <label for="btn-menu" class="bx bx-x-circle"></label>
-        </div>
+      <div class="cont-menu">
+        <nav>
+          <a href="user.html">Inicio</a>
+          <a href="uAsistencia.html">Asistencias</a>
+          <a href="uInfo.html">Información del usuario</a>
+          <a href="uReporte.html">Reportes</a>
+        </nav>
+        <label for="btn-menu" class="bx bx-x-circle"></label>
+      </div>
     </div>
 
     <main class="contenido">
-        <h2>Registro de asistencia</h2>
-        <p>Registra tu asistencia diaria por medio de esta pagina, selecciona el botón correspondiente para activar la
-            camara de tu celular.</p><br><br>
+      <h2>Registro de asistencia</h2>
+      <p>
+        Registra tu asistencia diaria por medio de esta pagina, selecciona el
+        botón correspondiente para activar la camara de tu celular.
+      </p>
+      <br /><br />
 
-        <div class="tarjeta">
-            <h3><i class="bx bx-info-circle" style="font-size: 15px;"></i> Información Confidencial</h3><br>
-            <p>Toda la informacion proporcionada es confidencial y solo será compartida con personal docente autorizado
-                para facilitar ajustes razonables</p>
-        </div>
+      <div class="tarjeta">
+        <h3>
+          <i class="bx bx-info-circle" style="font-size: 15px"></i> Información
+          Confidencial
+        </h3>
+        <br />
+        <p>
+          Toda la informacion proporcionada es confidencial y solo será
+          compartida con personal docente autorizado para facilitar ajustes
+          razonables
+        </p>
+      </div>
 
-        <div class="formulario">
-            <h3>Activa la cámara de tu dispositivo a continuación:</h3>
-            <p>En caso de tener dificultades para realizar tu registro, puedes registrar tu asistencia manualmente en la
-                pagina donde escaneas tu código QR.</p><br>
-            <div id="reader" width="600px" height="600px"></div>
-            <label for="qr-input-file">Seleccionar imagen QR</label><br>
-            <input type="file" id="qr-input-file" accept="image/*" capture>
-            <script src="../JS/QRScanner.js"></script>
-
-        </div>
+      <div class="formulario">
+        <h3>Activa la cámara de tu dispositivo a continuación:</h3>
+        <p>
+          En caso de tener dificultades para realizar tu registro, puedes
+          registrar tu asistencia manualmente en la pagina donde escaneas tu
+          código QR.
+        </p>
+        <br />
+        <div
+          id="reader"
+          style="width: 100%; max-width: 600px; margin: 0 auto"
+        ></div>
+        <label for="qr-input-file">Abrir cámara y escanear QR:</label><br />
+        <input type="file" id="qr-input-file" accept="image/*" capture />
+        <script src="../JS/QRScanner.js"></script>
+      </div>
     </main>
-</body>
-
+  </body>
 </html>
