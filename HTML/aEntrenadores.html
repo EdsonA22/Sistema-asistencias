@@ -20,7 +20,7 @@
           </div>
           <div>
             <h1>Administrador</h1>
-            <p>Sistema de Asistencias</p>
+            <p>Sistema de asistencias</p>
           </div>
         </div>
         <nav class="nav">
@@ -43,21 +43,23 @@
       <main class="main">
         <div class="page-header">
           <div>
-            <h2>Directorio de Entrenadores</h2>
+            <h2>Directorio de entrenadores</h2>
             <p class="muted">
               Lista y estado administrativo del personal deportivo
             </p>
           </div>
-          <button class="btn" onclick="location.href = 'aCrearUsuar.html'">
-            <i class="bx bx-plus-circle"></i> Nuevo Registro
-          </button>
+          <label for="rol">Filtrar por rol:</label>
+          <select id="rol">
+            <option value="entrenador">Entrenador</option>
+            <option value="admin">Administrador</option>
+          </select>
         </div>
 
         <div class="student-list">
           <div class="student-row">
             <div>
-              <strong>Prof. Alejandro Gómez Rivera</strong>
-              <p class="muted">Deporte: Fútbol Varonil | Zona Universitaria</p>
+              <strong>Prof. Juan Pérez</strong>
+              <p class="muted">Rol: Entrenador</p>
             </div>
             <div>
               <span class="badge">Activo</span>
@@ -69,10 +71,8 @@
 
           <div class="student-row">
             <div>
-              <strong>Mtra. Claudia Herrera Solís</strong>
-              <p class="muted">
-                Deporte: Baloncesto Femenil | Gimnasio Universitario
-              </p>
+              <strong>Prof. Juan Pérez 2</strong>
+              <p class="muted">Rol: administrador</p>
             </div>
             <div>
               <span class="badge">Activo</span>
