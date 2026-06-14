@@ -24,21 +24,46 @@
     <main class="contenido">
       <h2>Registro de asistencia</h2>
       <p>
-        Registra tu asistencia diaria por medio de esta pagina, selecciona el
-        botón correspondiente para activar la camara de tu celular.
+        Registra tu asistencia diaria por medio de esta página, selecciona el
+        botón correspondiente para activar la cámara de tu celular o subir una
+        imagen.
       </p>
-      <br /><br />
+
       <div class="formulario">
-        <h3>Activa la cámara de tu dispositivo a continuación:</h3>
+        <h3>Activa la cámara o selecciona un archivo:</h3>
         <p>
           En caso de tener dificultades para realizar tu registro, puedes
-          registrar tu asistencia manualmente en la pagina donde escaneas tu
+          registrar tu asistencia manualmente en la página donde escaneas tu
           código QR.
         </p>
-        <br />
-        <div id="reader" width="600px" height="600px"></div>
-        <input type="file" id="qr-input-file" accept="image/*" />
-        <input type="file" id="qr-input-file" accept="image/*" capture />
+
+        <div id="reader"></div>
+
+        <div class="contenedor-botones">
+          <label for="qr-input-galeria" class="btn btn-galeria"
+            ><i class="bx bx-image"></i>
+            Abrir galería
+          </label>
+          <input
+            type="file"
+            id="qr-input-galeria"
+            accept="image/*"
+            style="display: none"
+          />
+
+          <label for="qr-input-camara" class="btn btn-camara"
+            ><i class="bx bx-camera-alt"></i>
+            Tomar foto
+          </label>
+          <input
+            type="file"
+            id="qr-input-camara"
+            accept="image/*"
+            capture="environment"
+            style="display: none"
+          />
+        </div>
+
         <script src="../JS/QRScanner.js"></script>
       </div>
     </main>

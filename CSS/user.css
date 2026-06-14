@@ -8,38 +8,33 @@
 
 /* Fondo */
 body {
-  background-image: url("../Imagenes/canchaUV.webp");
+  background-image:
+    linear-gradient(rgba(36, 36, 36, 0.47), rgba(11, 45, 115, 0.75)),
+    url("../Imagenes/canchaUV.webp");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-/* Capa oscura sobre el fondo */
-.capa {
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
-  z-index: -1;
-  top: 0;
-  left: 0;
-}
-
 /* ENCABEZADO */
-
 .header {
   width: 100%;
-  height: 100px;
-  position: fixed;
-  top: 0;
-  left: 0;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Contenedor del header */
 .container {
   width: 100%;
-  max-width: 1700px;
+  max-width: 1200px;
   margin: auto;
   height: 100%;
   display: flex;
@@ -47,166 +42,140 @@ body {
   justify-content: space-between;
 }
 
-/* Icono del menú */
-.btn-menu label {
-  color: #fff;
-  font-size: 100px;
-  cursor: pointer;
-}
-
-/* Título */
-.logo {
-  display: flex;
-  align-items: center;
-}
-
+/* Uso de 'clamp' para que la fuente se adapte al tamaño de la pantalla (Mínimo, Ideal, Máximo) */
 .logo h1 {
   color: #fff;
   font-weight: 400;
-  font-size: 45px;
-  margin-left: 10px;
+  font-size: clamp(20px, 5vw, 45px);
 }
 
-/* Botón cerrar sesión */
-.menu a {
+.menu a.cerrar {
   color: #fff;
-  font-size: 50px;
+  font-size: clamp(16px, 4vw, 30px);
   text-decoration: none;
+  background: #d9534f; /* Fondo rojo para el botón de cerrar sesión */
+  padding: 8px 15px;
+  border-radius: 5px;
+  transition: background 0.3s;
 }
 
-/* MENÚ LATERAL */
-
-#btn-menu {
-  display: none;
+.menu a.cerrar:hover {
+  background: #c9302c;
+  border-radius: 5px;
 }
 
-.container-menu {
-  position: fixed;
-  background: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  transition: all 500ms ease;
-  opacity: 0;
-  visibility: hidden;
-}
-
-/* Mostrar menú */
-#btn-menu:checked ~ .container-menu {
-  opacity: 1;
-  visibility: visible;
-}
-
-/* Panel lateral */
-.cont-menu {
-  width: 100%;
-  max-width: 250px;
-  background: #0414a5;
-  height: 100vh;
-  position: relative;
-  transition: all 500ms ease;
-  transform: translateX(-100%);
-}
-
-/* Animación apertura */
-#btn-menu:checked ~ .container-menu .cont-menu {
-  transform: translateX(0%);
-}
-
-/* Navegación del menú */
-.cont-menu nav {
-  transform: translateY(13%);
-}
-
-/* Links del menú */
-.cont-menu nav a {
-  position: relative;
-  display: block;
-  text-decoration: none;
-  font-size: 30px;
-  padding: 33px;
-  color: #c7c7c7;
-  border-left: 5px solid transparent;
-  transition: all 400ms ease;
-}
-
-/* Hover */
-.cont-menu nav a:hover {
-  border-left: 5px solid #c7c7c7;
-  background: #501900;
-}
-
-/* Botón cerrar menú */
-.cont-menu label {
-  position: fixed;
-  right: 90px;
-  top: 15px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 55px;
-}
-
+/* CONTENIDO PRINCIPAL */
 .contenido {
-  margin-left: 450px;
-  /* espacio para el menú */
+  /* Se eliminó margin-left: 450px para evitar el espacio en blanco en celulares */
   padding: 20px;
-  margin-top: 100px;
+  margin-top: 100px; /* Espacio para que el header no tape el contenido */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centra el contenido en la pantalla */
+  text-align: center;
 }
 
 .contenido h2 {
   color: #ffffff;
-  margin-bottom: 20px;
-  font-size: 50px;
+  margin-bottom: 15px;
+  font-size: clamp(30px, 6vw, 50px);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para que se lea mejor sobre la foto */
 }
 
 .contenido p {
-  font-size: 20px;
+  font-size: clamp(16px, 3vw, 20px);
   color: #ffffff;
+  max-width: 800px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
 }
 
+/* FORMULARIO Y LECTOR */
 .formulario {
-  margin-top: 20px;
+  margin-top: 30px;
   background: rgb(255, 255, 255);
-  padding: 20px;
+  padding: 30px 20px;
   border-radius: 10px;
   border: 1px solid #afd6fc;
-  width: 900px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.tarjeta {
-  background: rgb(226, 242, 255);
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #afd6fc;
-  width: 900px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.tarjeta p {
-  color: #0b1994;
-}
-
-.formulario {
-  margin-top: 20px;
-  background: rgb(255, 255, 255);
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #afd6fc;
-  width: 900px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  width: 100%; /* Toma todo el ancho disponible */
+  max-width: 600px; /* Pero no crece más de 600px en monitores grandes */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .formulario h3 {
-  font-size: 30px;
+  font-size: clamp(22px, 4vw, 30px);
   color: #000e8f;
+  margin-bottom: 15px;
 }
 
 .formulario p {
-  color: #b8b8b8;
+  color: #555; /* Texto un poco más oscuro para mejor lectura */
+  font-size: 16px;
+  margin-bottom: 20px;
+  text-shadow: none; /* Quitamos la sombra porque el fondo es blanco */
 }
 
-.formulario label {
-  font-size: 25px;
+#reader {
+  width: 100% !important; /* Fuerza al escáner a no desbordarse del formulario */
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+/* DISEÑO DE LOS NUEVOS BOTONES */
+.contenedor-botones {
+  display: flex;
+  flex-direction: column; /* Apila los botones en celulares */
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.1s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Efecto al presionar el botón en el celular */
+.btn:active {
+  transform: scale(0.96);
+}
+
+/* Colores distintivos para cada botón */
+.btn-galeria {
+  background-color: #007bff; /* Azul */
+  border: 2px solid #0056b3;
+}
+
+.btn-galeria:hover {
+  background-color: #0056b3;
+}
+
+.btn-camara {
+  background-color: #28a745; /* Verde */
+  border: 2px solid #1e7e34;
+}
+
+.btn-camara:hover {
+  background-color: #1e7e34;
+}
+
+/* Media Query para pantallas grandes (Tablets horizontales y Escritorio) */
+@media screen and (min-width: 600px) {
+  .contenedor-botones {
+    flex-direction: row; /* Coloca los botones uno al lado del otro si hay espacio */
+    justify-content: space-between;
+  }
+
+  .btn {
+    width: 48%; /* Cada botón ocupa la mitad del espacio */
+  }
 }
