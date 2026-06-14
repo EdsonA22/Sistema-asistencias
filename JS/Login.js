@@ -1,6 +1,10 @@
 import { auth, db } from "./Conexion.js";
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
-import { doc, getDoc } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const formLogin = document.getElementById("formLogin");
 
