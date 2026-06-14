@@ -268,6 +268,7 @@ a:focus {
 
 .btn,
 .secondary-btn,
+.detail-btn,
 .danger-btn {
   border: 0;
   border-radius: 8px;
@@ -280,6 +281,11 @@ a:focus {
 .btn {
   background: #1554d1;
   color: #ffffff;
+}
+
+.detail-btn {
+  background: #eaf2ff;
+  color: #1554d1;
 }
 
 .secondary-btn {

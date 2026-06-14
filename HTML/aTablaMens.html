@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asistencias de hoy - Admin</title>
+    <title>Tabla de Asistencias - Admin</title>
     <link
       href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css"
       rel="stylesheet"
@@ -46,9 +46,9 @@
       <main class="main">
         <div class="page-header">
           <div>
-            <h2>Bitácora de asistencias del dia</h2>
+            <h2>Bitácora general de asistencias</h2>
             <p class="muted">
-              Visualización detallada de registros diarios del sistema
+              Visualización detallada de registros mensuales del sistema
             </p>
           </div>
         </div>
@@ -58,55 +58,34 @@
             <thead>
               <tr>
                 <th>Nombre del entrenador</th>
-                <th>Hora de entrada</th>
-                <th>Hora de salida</th>
-                <th>Estado</th>
-                <th>Editar</th>
+                <th>Rol</th>
+                <th>Mes</th>
+                <th>Consultar</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>Juan Pérez</td>
-                <td>03:30 PM</td>
-                <td>05:00 PM</td>
+                <td>Entrenador</td>
                 <td>
-                  <span
-                    class="badge warning"
-                    style="background: #ffe8e8; color: #c0992f"
-                    >Ausente</span
-                  >
+                  <select id="Mes">
+                    <option value="enero">Enero</option>
+                    <option value="febrero">Febrero</option>
+                    <option value="marzo">Marzo</option>
+                    <option value="abril">Abril</option>
+                    <option value="mayo">Mayo</option>
+                    <option value="junio">Junio</option>
+                    <option value="julio">Julio</option>
+                    <option value="agosto">Agosto</option>
+                    <option value="septiembre">Septiembre</option>
+                    <option value="octubre">Octubre</option>
+                    <option value="noviembre">Noviembre</option>
+                    <option value="diciembre">Diciembre</option>
+                  </select>
                 </td>
                 <td>
-                  <button class="secondary-btn">
-                    <i class="bx bx-edit"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>Juan Perez 2</td>
-                <td>03:30 PM</td>
-                <td>--:-- --</td>
-                <td><span class="badge">Presente</span></td>
-                <td>
-                  <button class="secondary-btn">
-                    <i class="bx bx-edit"></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>Juan Perez 3</td>
-                <td>--:-- --</td>
-                <td>--:-- --</td>
-                <td>
-                  <span
-                    class="badge warning"
-                    style="background: #ffe8e8; color: #ff1909"
-                    >Falta</span
-                  >
-                </td>
-                <td>
-                  <button class="secondary-btn">
-                    <i class="bx bx-edit"></i>
+                  <button class="detail-btn">
+                    <i class="bx bx-calendar-alt"></i> Ver detalles
                   </button>
                 </td>
               </tr>
@@ -116,6 +95,6 @@
       </main>
     </div>
 
-    <script type="text/javascript" src="../JS/ListaDia.js"></script>
+    <script type="text/javascript" src="../JS/ListaMens.js"></script>
   </body>
 </html>
