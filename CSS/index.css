@@ -37,12 +37,6 @@ body {
   display: flex;
   align-items: center;
 }
-
-.logo {
-  width: 110px;
-  height: auto;
-}
-
 .header h1 {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-size: 48px;

@@ -24,7 +24,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 20px;
+  padding: 0px 15px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -41,20 +41,25 @@ body {
   align-items: center;
   justify-content: space-between;
 }
+.logo {
+  width: 110px;
+  height: auto;
+}
 
-/* Uso de 'clamp' para que la fuente se adapte al tamaño de la pantalla (Mínimo, Ideal, Máximo) */
+/* Título del logo más grande en celulares */
 .logo h1 {
   color: #fff;
   font-weight: 400;
-  font-size: clamp(20px, 5vw, 45px);
+  font-size: clamp(20px, 6vw, 45px); /* Subimos el mínimo de 20px a 26px */
 }
 
+/* Botón de cerrar sesión un poco más grande */
 .menu a.cerrar {
   color: #fff;
-  font-size: clamp(16px, 4vw, 30px);
+  font-size: clamp(18px, 4vw, 30px); /* Subimos el mínimo de 16px a 18px */
   text-decoration: none;
-  background: #d9534f; /* Fondo rojo para el botón de cerrar sesión */
-  padding: 8px 15px;
+  background: #d9534f;
+  padding: 10px 15px; /* Botón un poco más "gordito" */
   border-radius: 5px;
   transition: background 0.3s;
 }
@@ -68,22 +73,24 @@ body {
 .contenido {
   /* Se eliminó margin-left: 450px para evitar el espacio en blanco en celulares */
   padding: 20px;
-  margin-top: 100px; /* Espacio para que el header no tape el contenido */
+  margin-top: 0px; /* Espacio para que el header no tape el contenido */
   display: flex;
   flex-direction: column;
   align-items: center; /* Centra el contenido en la pantalla */
   text-align: center;
 }
 
+/* Título principal más grande */
 .contenido h2 {
   color: #ffffff;
   margin-bottom: 15px;
-  font-size: clamp(30px, 6vw, 50px);
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7); /* Sombra para que se lea mejor sobre la foto */
+  font-size: clamp(36px, 8vw, 50px); /* Subimos el mínimo de 30px a 36px */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
 }
 
+/* Texto de los párrafos más grande y legible */
 .contenido p {
-  font-size: clamp(16px, 3vw, 20px);
+  font-size: clamp(18px, 4vw, 22px); /* Subimos el mínimo de 16px a 18px */
   color: #ffffff;
   max-width: 800px;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
@@ -101,17 +108,19 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Título dentro del cuadro blanco */
 .formulario h3 {
-  font-size: clamp(22px, 4vw, 30px);
+  font-size: clamp(26px, 5vw, 30px); /* Subimos el mínimo de 22px a 26px */
   color: #000e8f;
   margin-bottom: 15px;
 }
 
+/* Párrafo dentro del cuadro blanco */
 .formulario p {
-  color: #555; /* Texto un poco más oscuro para mejor lectura */
-  font-size: 16px;
+  color: #555;
+  font-size: 18px; /* Subimos de 16px a 18px */
   margin-bottom: 20px;
-  text-shadow: none; /* Quitamos la sombra porque el fondo es blanco */
+  text-shadow: none;
 }
 
 #reader {
