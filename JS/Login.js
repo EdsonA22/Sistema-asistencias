@@ -1,5 +1,5 @@
 import { auth, db } from "./Conexion.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import { doc, getDoc } from "firebase/firestore";
 
 const formLogin = document.getElementById("formLogin");

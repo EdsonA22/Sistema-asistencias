@@ -1,8 +1,14 @@
 import { auth, db } from "./Conexion.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {
+  doc,
+  setDoc,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+console.log("CrearUsuarios.js cargado");
 
 const form = document.getElementById("formCrearUsuario");
+console.log(form);
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault(); // Evita que la página se recargue
