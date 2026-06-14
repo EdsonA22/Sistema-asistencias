@@ -33,6 +33,11 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
 }
 
+.logo {
+  width: 110px;
+  height: auto;
+}
+
 .logo-link {
   display: flex;
   align-items: center;
@@ -116,12 +121,12 @@ body {
   border-color: #00aeff;
 }
 
-.btn-buscar {
+.btn-entrada {
   height: 54px;
   padding: 0 24px;
   border: none;
   border-radius: 8px;
-  background: #0b2d73;
+  background: #018011;
   color: #fff;
   font-size: 18px;
   font-weight: 600;
@@ -129,8 +134,25 @@ body {
   transition: background 0.3s ease;
 }
 
-.btn-buscar:hover {
-  background: #1554d1;
+.btn-entrada:hover {
+  background: #15d134;
+}
+
+.btn-salida {
+  height: 54px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 8px;
+  background: #ff6b6b;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-salida:hover {
+  background: #ff5252;
 }
 
 /* SECCIÓN DEL QR */
