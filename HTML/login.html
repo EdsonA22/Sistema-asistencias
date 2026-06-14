@@ -1,37 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Academia Baloncesto UV</title>
-    <link href='https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="../CSS/login.css">
-</head>
+    <link
+      href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../CSS/login.css" />
+  </head>
 
-<body>
+  <body>
     <div class="wrapper">
-        <form action="">
-            <h1>Iniciar como administrador.</h1>
-            <img src="../Imagenes/Logo halcones.png" class="logo">
-            <div class="textfield">
-                <input type="text" placeholder="Usuario" required>
-                <i class='bxr  bx-user-hexagon'></i>
-            </div>
-            <div class="textfield">
-                <input type="password" placeholder="Contraseña" required>
-                <i class='bxr  bx-lock'></i>
-            </div>
+      <form id="formLogin">
+        <h1>Iniciar sesión</h1>
+        <img src="../Imagenes/Logo halcones.png" class="logo" />
 
-            <div class="recordar">
-                <label><input type="checkbox">Recordarme</label>
-                <a href="admin.html">¿Olvidaste tu Contraseña?</a><br>
-            </div>
-            <button type="submit" class="btn" onclick="window.location.href='../HTML/admin.html'">Ingresar</button>
-            <div class="registrarse">
-                <p>¿Volver al registro de asistencia?</p><a href="index.html">Haz click aqui</a>
-        </form>
+        <div class="textfield">
+          <input
+            type="email"
+            id="loginCorreo"
+            placeholder="Correo electrónico"
+            required
+          />
+          <i class="bxr bx-user-hexagon"></i>
+        </div>
+        <div class="textfield">
+          <input
+            type="password"
+            id="loginPassword"
+            placeholder="Contraseña"
+            required
+          />
+          <i class="bxr bx-lock"></i>
+        </div>
+
+        <div class="recordar">
+          <label><input type="checkbox" />Recordarme</label>
+        </div>
+
+        <button type="submit" class="btn">Ingresar</button>
+      </form>
+
+      <script type="module" src="../JS/Login.js"></script>
     </div>
-</body>
-
+  </body>
 </html>

@@ -1,128 +1,129 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "poppins", sans-serif;
 }
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: url(../Imagenes/canchaUV.webp);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(4, 26, 66, 0.47), rgba(10, 39, 99, 0.75)),
+    url("../Imagenes/canchaUV.webp");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .wrapper {
-    width: 420px;
-    background: transparent;
-    border: 2px solid rgba(231, 198, 198, 0.2);
-    backdrop-filter: blur(50px);
-    box-shadow: 0 0 10px rgba(79, 161, 255, 0.2);
-    color: #ffffff;
-    border-radius: 10px;
-    padding: 30px 40px;
+  width: 420px;
+  background: transparent;
+  border: 2px solid rgba(231, 198, 198, 0.2);
+  backdrop-filter: blur(50px);
+  box-shadow: 0 0 10px rgba(79, 161, 255, 0.2);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 30px 40px;
 }
 
 .wrapper img {
-    width: 250px;
-    height: 150px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
+  width: 250px;
+  height: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .wrapper h1 {
-    text-align: center;
-    font-size: 40px;
+  text-align: center;
+  font-size: 40px;
 }
 
 .wrapper .textfield {
-    position: relative;
-    width: 100%;
-    height: 65px;
-    margin: 35px 0;
-    color: rgb(255, 255, 255);
+  position: relative;
+  width: 100%;
+  height: 65px;
+  margin: 35px 0;
+  color: rgb(255, 255, 255);
 }
 
 .textfield input {
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    border: none;
-    outline: none;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 40px;
-    font-size: 25px;
-    color: #000000;
-    padding: 20px 45px 20px 20px;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  font-size: 25px;
+  color: #000000;
+  padding: 20px 45px 20px 20px;
 }
 
 .textfield input::placeholder {
-    color: #ffffff;
+  color: #ffffff;
 }
 
 .textfield i {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 28px;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
 }
 
 .wrapper .recordar {
-    display: flex;
-    justify-content: space-between;
-    font-size: 17px;
-    margin: -15px 0 15px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 17px;
+  margin: -15px 0 15px;
 }
 
 .recordar label input {
-    accent-color: #ffffff;
-    margin-right: 10px;
+  accent-color: #ffffff;
+  margin-right: 10px;
 }
 
 .recordar a {
-    color: #ffffff;
-    text-decoration: none;
+  color: #ffffff;
+  text-decoration: none;
 }
 
 .recordar a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .wrapper .btn {
-    width: 100%;
-    height: 45px;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: #ffffff;
-    color: #333;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 40px;
-    cursor: pointer;
+  width: 100%;
+  height: 45px;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 40px;
+  cursor: pointer;
 }
 
 .wrapper .registrarse {
-    text-align: center;
-    margin: 20px 0 15px;
-    font-size: 14.5px;
-    color: #ffffff;
+  text-align: center;
+  margin: 20px 0 15px;
+  font-size: 14.5px;
+  color: #ffffff;
 }
 
 .registrarse p a {
-    color: #ffffff;
-    text-decoration: none;
-    font-weight: 600;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 .registrarse p a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

@@ -39,7 +39,7 @@
           ><br />
           <a href="index.html"><i class="bx bx-qr"></i>Registro por QR</a>
         </nav>
-        <a href="login.html" class="logout"
+        <a id="btnCerrarSesion" href="login.html" class="logout"
           ><i class="bx bx-door-open-alt"></i> Cerrar sesión</a
         >
       </aside>
@@ -56,9 +56,9 @@
 
         <div class="grid two">
           <div class="card">
-            <form>
+            <form id="formCrearUsuario">
               <div>
-                <label for="nombre">Nombre nompleto</label>
+                <label for="nombre">Nombre completo</label>
                 <input
                   type="text"
                   id="nombre"
@@ -85,6 +85,10 @@
                 />
               </div>
               <div>
+                <label for="password">Contraseña provisional</label>
+                <input type="password" id="password" placeholder="Mínimo 6 caracteres" required />
+              </div>
+              <div>
                 <label for="rol">Rol en el sistema</label>
                 <select id="rol">
                   <option value="entrenador">Entrenador</option>
@@ -100,6 +104,6 @@
       </main>
     </div>
 
-    <script type="text/javascript" src="../JS/CrearUsuarios.js"></script>
+<script type="module" src="../JS/CrearUsuarios.js"></script>
   </body>
 </html>
