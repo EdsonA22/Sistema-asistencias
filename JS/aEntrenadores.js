@@ -1,7 +1,7 @@
 // 1. Importación correcta de tu conexión local con la extensión .js
 import { db, auth } from "./Conexion.js";
 
-// 2. Importaciones de Firestore y Auth utilizando exactamente el mismo CDN (v10.8.1)
+// 2. Importaciones de Firestore y Auth utilizando la misma versión que Conexion.js (v12.0.0)
 import {
   collection,
   getDocs,
@@ -9,9 +9,12 @@ import {
   updateDoc,
   query,
   where,
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
+import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+const tabla = document.getElementById("tablaEntrenadores");
+// ... el resto de tu código se mantiene igual ...
 const tabla = document.getElementById("tablaEntrenadores");
 const modal = document.getElementById("modalGestion");
 
