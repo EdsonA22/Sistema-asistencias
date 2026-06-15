@@ -1,48 +1,54 @@
 import { auth, db } from "./Conexion.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 import {
   doc,
   setDoc,
-} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
-console.log("CrearUsuarios.js cargado");
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const form = document.getElementById("formCrearUsuario");
-console.log(form);
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault(); // Evita que la página se recargue
+if (form) {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-  // Obtener los valores de los inputs
-  const nombre = document.getElementById("nombre").value;
-  const correo = document.getElementById("correo").value;
-  const rol = document.getElementById("rol").value;
-  const password = document.getElementById("password").value;
+    // Ya no buscamos el ID "matricula"
+    const nombre = document.getElementById("nombre").value.trim();
+    const correo = document.getElementById("correo").value.trim();
+    const rol = document.getElementById("rol").value;
+    const password = document.getElementById("password").value;
 
-  try {
-    // 1. Registrar al usuario en el sistema de autenticación
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      correo,
-      password,
-    );
-    const usuarioFirebase = userCredential.user;
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        correo,
+        password,
+      );
+      const usuarioFirebase = userCredential.user;
 
-    // 2. Guardar los datos administrativos en la base de datos Firestore
-    // Se crea un documento en la colección "usuarios" usando el ID único (uid) del usuario
-    await setDoc(doc(db, "usuarios", usuarioFirebase.uid), {
-      nombre: nombre,
-      matricula: matricula,
-      correo: correo,
-      rol: rol,
-      estatus: "Activo", // <-- Asegura esta línea
-      fechaCreacion: new Date(),
-    });
+      // Guardamos solo los datos relevantes en Firestore
+      await setDoc(doc(db, "usuarios", usuarioFirebase.uid), {
+        nombre: nombre,
+        correo: correo,
+        rol: rol,
+        estatus: "Activo",
+        fechaCreacion: new Date(),
+      });
 
-    alert("Usuario creado exitosamente en el sistema.");
-    form.reset(); // Limpia los campos del formulario
-  } catch (error) {
-    console.error("Error en el registro:", error);
-    alert("Ocurrió un error: " + error.message);
-  }
-});
+      alert("Usuario registrado exitosamente en el sistema.");
+      form.reset();
+    } catch (error) {
+      console.error("Error en el registro:", error);
+      if (error.code === "auth/email-already-in-use") {
+        alert(
+          "Ocurrió un error: Este correo ya está registrado en el sistema.",
+        );
+      } else if (error.code === "auth/weak-password") {
+        alert(
+          "Ocurrió un error: La contraseña debe tener al menos 6 caracteres.",
+        );
+      } else {
+        alert("Ocurrió un error al registrar: " + error.message);
+      }
+    }
+  });
+}

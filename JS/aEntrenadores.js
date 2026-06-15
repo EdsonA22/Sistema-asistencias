@@ -53,17 +53,16 @@ async function cargarUsuarios() {
 
       const fila = document.createElement("tr");
       fila.innerHTML = `
-                <td>${user.nombre}</td>
-                <td>${user.matricula}</td>
-                <td>${user.correo}</td>
-                <td>${user.rol}</td>
-                <td><span class="badge ${estatusActual.toLowerCase()}">${estatusActual}</span></td>
-                <td>
-                    <button class="btn btn-gestionar" data-id="${id}" data-nombre="${user.nombre}" data-correo="${user.correo}" data-estatus="${estatusActual}">
-                        Gestionar
-                    </button>
-                </td>
-            `;
+    <td>${user.nombre}</td>
+    <td>${user.correo}</td>
+    <td>${user.rol}</td>
+    <td><span class="badge ${estatusActual.toLowerCase()}">${estatusActual}</span></td>
+    <td>
+        <button class="btn btn-gestionar" data-id="${id}" data-nombre="${user.nombre}" data-correo="${user.correo}" data-estatus="${estatusActual}">
+            Gestionar
+        </button>
+    </td>
+`;
       tabla.appendChild(fila);
     });
 
