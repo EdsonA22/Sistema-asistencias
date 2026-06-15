@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reportes - Admin</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link
       href="https://cdn.boxicons.com/3.0.6/fonts/basic/boxicons.min.css"
       rel="stylesheet"
@@ -52,7 +53,7 @@
             <h2>Bienvenido administrador</h2>
             <p class="muted">Estadísticas del dia y reportes generales</p>
           </div>
-          <button class="btn">
+          <button class="btn" id="btnExportar">
             <i class="bx bx-cloud-download"></i> Exportar datos
           </button>
         </div>
@@ -60,44 +61,60 @@
         <div class="grid three" style="margin-bottom: 24px">
           <div class="card">
             <div class="metric">
-              <strong>94.2%</strong>
+              <strong id="valAsistencia">--%</strong>
               <span>Asistencia semanal</span>
             </div>
           </div>
           <div class="card">
             <div class="metric">
-              <strong>5</strong>
-              <span>Usuarios registrados</span>
+              <strong id="valUsuarios">--</strong>
+              <span>Entrenadores registrados</span>
             </div>
           </div>
           <div class="card">
             <div class="metric">
-              <strong>15</strong>
-              <span>Sesiones de hoy</span>
+              <strong id="valSesiones">--</strong>
+              <span>Asistencias de hoy</span>
             </div>
           </div>
         </div>
 
         <div class="grid two">
           <div class="card">
-            <h3>Asistencias por Estatus</h3>
-            <div class="donut"></div>
-            <p class="footer-note" style="text-align: center">
-              Azul: Presente | Verde: Justificado | Amarillo: Retardo | Rojo:
-              Falta
+            <h3>Asistencias de la semana por Estatus</h3>
+            <div style="display: flex; justify-content: center; margin: 20px 0">
+              <canvas id="graficoDonut" width="150" height="150"></canvas>
+            </div>
+            <p class="footer-note" style="text-align: center; margin-top: 15px">
+              <span style="color: #4a90e2; font-weight: bold"
+                >Azul: Presente</span
+              >
+              |
+              <span style="color: #2ecc71; font-weight: bold"
+                >Verde: Justificado</span
+              >
+              |
+              <span style="color: #f1c40f; font-weight: bold"
+                >Amarillo: Retardo</span
+              >
+              |
+              <span style="color: #e74c3c; font-weight: bold">Rojo: Falta</span>
             </p>
           </div>
 
           <div class="card">
             <h3>Concurrencia semanal</h3>
-            <div class="trend">
-              <div style="height: 85%">Lun</div>
-              <div style="height: 90%">Mar</div>
-              <div style="height: 95%">Mié</div>
-              <div style="height: 75%">Jue</div>
-              <div style="height: 88%">Vie</div>
-              <div style="height: 40%">Sáb</div>
-            </div>
+            <div
+              class="trend"
+              id="graficoTendencia"
+              style="
+                display: flex;
+                align-items: flex-end;
+                justify-content: space-around;
+                height: 150px;
+                padding-top: 20px;
+              "
+            ></div>
           </div>
         </div>
       </main>

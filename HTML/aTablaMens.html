@@ -56,47 +56,45 @@
         </div>
 
         <div class="card" style="padding: 0; overflow-x: auto">
+          <div
+            style="
+              margin-bottom: 20px;
+              display: flex;
+              gap: 15px;
+              align-items: center;
+              flex-wrap: wrap;
+            "
+          >
+            <div>
+              <label for="mesSeleccionado"><b>Mes a evaluar:</b></label>
+              <input type="month" id="mesSeleccionado" class="input-form" />
+            </div>
+
+            <div>
+              <label for="buscadorEntrenadores"
+                ><b>Buscar entrenador:</b></label
+              >
+              <input
+                type="text"
+                id="buscadorEntrenadores"
+                class="input-form"
+                placeholder="Escribe un nombre..."
+              />
+            </div>
+          </div>
           <table>
             <thead>
               <tr>
-                <th>Nombre del entrenador</th>
-                <th>Rol</th>
-                <th>Mes</th>
-                <th>Consultar</th>
+                <th>Nombre del Entrenador</th>
+                <th>Acción</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td>Juan Pérez</td>
-                <td>Entrenador</td>
-                <td>
-                  <select id="Mes">
-                    <option value="enero">Enero</option>
-                    <option value="febrero">Febrero</option>
-                    <option value="marzo">Marzo</option>
-                    <option value="abril">Abril</option>
-                    <option value="mayo">Mayo</option>
-                    <option value="junio">Junio</option>
-                    <option value="julio">Julio</option>
-                    <option value="agosto">Agosto</option>
-                    <option value="septiembre">Septiembre</option>
-                    <option value="octubre">Octubre</option>
-                    <option value="noviembre">Noviembre</option>
-                    <option value="diciembre">Diciembre</option>
-                  </select>
-                </td>
-                <td>
-                  <button class="detail-btn">
-                    <i class="bx bx-calendar-alt"></i> Ver detalles
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+            <tbody></tbody>
           </table>
         </div>
       </main>
     </div>
 
-    <script type="module" src="../JS/ListaMens.js"></script>
+    <script type="module" src="../JS/BitacoraMes.js"></script>
   </body>
 </html>
