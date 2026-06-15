@@ -1,7 +1,4 @@
-// 1. Importación correcta de tu conexión local con la extensión .js
 import { db, auth } from "./Conexion.js";
-
-// 2. Importaciones de Firestore y Auth utilizando la misma versión que Conexion.js (v12.0.0)
 import {
   collection,
   getDocs,
@@ -10,14 +7,17 @@ import {
   query,
   where,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-
 import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-// ... el resto de tu código se mantiene igual ...
+// Elementos del DOM generales
 const tabla = document.getElementById("tablaEntrenadores");
 const modal = document.getElementById("modalGestion");
 
-// Elementos del Modal
+// Elementos del DOM para los filtros
+const inputBusqueda = document.getElementById("busquedaNombre");
+const selectRol = document.getElementById("rol");
+
+// Elementos del DOM del Modal
 const modalNombre = document.getElementById("modalNombre");
 const modalCorreo = document.getElementById("modalCorreo");
 const modalEstatus = document.getElementById("modalEstatus");
@@ -29,10 +29,12 @@ const btnCerrarModal = document.getElementById("btnCerrarModal");
 let usuarioSeleccionadoId = null;
 let usuarioSeleccionadoEmail = null;
 
-// Cargar usuarios desde Firestore
+// Arreglo local para evitar consultar a Firebase en cada búsqueda
+let todosLosUsuarios = [];
+
+// 1. Obtener datos de Firestore (Solo se ejecuta al cargar la página)
 async function cargarUsuarios() {
   if (!tabla) return;
-
   tabla.innerHTML = "<tr><td colspan='5'>Cargando usuarios...</td></tr>";
 
   try {
@@ -42,52 +44,93 @@ async function cargarUsuarios() {
     );
     const querySnapshot = await getDocs(q);
 
-    tabla.innerHTML = "";
-
-    if (querySnapshot.empty) {
-      tabla.innerHTML =
-        "<tr><td colspan='5'>No hay usuarios registrados en el sistema.</td></tr>";
-      return;
-    }
+    todosLosUsuarios = []; // Vaciamos el arreglo por si hay recargas
 
     querySnapshot.forEach((documento) => {
-      const user = documento.data();
-      const id = documento.id;
-
-      const estatusActual = user.estatus || "Activo";
-
-      const fila = document.createElement("tr");
-      fila.innerHTML = `
-                <td>${user.nombre}</td>
-                <td>${user.correo}</td>
-                <td>${user.rol}</td>
-                <td><span class="badge ${estatusActual.toLowerCase()}">${estatusActual}</span></td>
-                <td>
-                    <button class="btn btn-gestionar" data-id="${id}" data-nombre="${user.nombre}" data-correo="${user.correo}" data-estatus="${estatusActual}">
-                        Gestionar
-                    </button>
-                </td>
-            `;
-      tabla.appendChild(fila);
-    });
-
-    document.querySelectorAll(".btn-gestionar").forEach((boton) => {
-      boton.addEventListener("click", (e) => {
-        usuarioSeleccionadoId = e.target.getAttribute("data-id");
-        usuarioSeleccionadoEmail = e.target.getAttribute("data-correo");
-
-        modalNombre.textContent = e.target.getAttribute("data-nombre");
-        modalCorreo.textContent = usuarioSeleccionadoEmail;
-        modalEstatus.value = e.target.getAttribute("data-estatus");
-
-        if (modal) modal.style.display = "flex";
+      todosLosUsuarios.push({
+        id: documento.id,
+        ...documento.data(),
       });
     });
+
+    renderizarTabla(); // Dibujamos la tabla con todos los datos
   } catch (error) {
     console.error("Error al cargar usuarios:", error);
     tabla.innerHTML =
       "<tr><td colspan='5'>Error al cargar los datos. Revisa la consola.</td></tr>";
   }
+}
+
+// 2. Función encargada de dibujar la tabla aplicando los filtros en tiempo real
+function renderizarTabla() {
+  if (!tabla) return;
+  tabla.innerHTML = "";
+
+  // Obtenemos los valores actuales (convertidos a minúsculas para comparaciones exactas)
+  const textoBusqueda = inputBusqueda ? inputBusqueda.value.toLowerCase() : "";
+  const rolSeleccionado = selectRol ? selectRol.value.toLowerCase() : "todos";
+
+  // Filtramos el arreglo local
+  const usuariosFiltrados = todosLosUsuarios.filter((user) => {
+    // Verificamos si el nombre incluye lo que el usuario escribe
+    const nombreValido = user.nombre
+      ? user.nombre.toLowerCase().includes(textoBusqueda)
+      : false;
+
+    // Verificamos si coincide el rol (o si está seleccionada la opción "Todos")
+    const rolValido =
+      rolSeleccionado === "todos" ||
+      (user.rol && user.rol.toLowerCase() === rolSeleccionado);
+
+    return nombreValido && rolValido;
+  });
+
+  if (usuariosFiltrados.length === 0) {
+    tabla.innerHTML =
+      "<tr><td colspan='5' style='text-align:center;'>No se encontraron usuarios que coincidan con la búsqueda.</td></tr>";
+    return;
+  }
+
+  // Iteramos sobre el arreglo ya filtrado y construimos las filas
+  usuariosFiltrados.forEach((user) => {
+    const estatusActual = user.estatus || "Activo";
+    const fila = document.createElement("tr");
+
+    fila.innerHTML = `
+      <td>${user.nombre}</td>
+      <td>${user.correo}</td>
+      <td>${user.rol}</td>
+      <td><span class="badge ${estatusActual.toLowerCase()}">${estatusActual}</span></td>
+      <td>
+          <button class="btn btn-gestionar" data-id="${user.id}" data-nombre="${user.nombre}" data-correo="${user.correo}" data-estatus="${estatusActual}">
+              Gestionar
+          </button>
+      </td>
+    `;
+    tabla.appendChild(fila);
+  });
+
+  // Reasignamos los eventos a los botones de la tabla recién creada
+  document.querySelectorAll(".btn-gestionar").forEach((boton) => {
+    boton.addEventListener("click", (e) => {
+      usuarioSeleccionadoId = e.target.getAttribute("data-id");
+      usuarioSeleccionadoEmail = e.target.getAttribute("data-correo");
+
+      modalNombre.textContent = e.target.getAttribute("data-nombre");
+      modalCorreo.textContent = usuarioSeleccionadoEmail;
+      modalEstatus.value = e.target.getAttribute("data-estatus");
+
+      if (modal) modal.style.display = "flex";
+    });
+  });
+}
+
+// 3. Listeners de búsqueda dinámica (Disparan renderizarTabla sin ir a la base de datos)
+if (inputBusqueda) {
+  inputBusqueda.addEventListener("input", renderizarTabla);
+}
+if (selectRol) {
+  selectRol.addEventListener("change", renderizarTabla);
 }
 
 // Guardar cambios de estatus
@@ -103,7 +146,7 @@ if (btnGuardarCambios) {
 
       alert("Estatus actualizado correctamente.");
       modal.style.display = "none";
-      cargarUsuarios();
+      cargarUsuarios(); // Recargamos para actualizar datos desde el servidor
     } catch (error) {
       alert("Error al actualizar: " + error.message);
     }
@@ -144,7 +187,7 @@ if (btnEliminarLogico) {
 
       alert("Usuario eliminado del sistema correctamente.");
       modal.style.display = "none";
-      cargarUsuarios();
+      cargarUsuarios(); // Recargamos para que desaparezca de la tabla
     } catch (error) {
       alert("Error al eliminar: " + error.message);
     }
@@ -157,4 +200,5 @@ if (btnCerrarModal) {
   });
 }
 
+// Inicialización
 document.addEventListener("DOMContentLoaded", cargarUsuarios);

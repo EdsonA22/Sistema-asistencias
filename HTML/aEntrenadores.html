@@ -49,15 +49,25 @@
         <div class="page-header">
           <div>
             <h2>Directorio de entrenadores</h2>
-            <p class="muted">
-              Lista y estado administrativo del personal deportivo
-            </p>
+            <p class="muted">Lista y estado administrativo del personal deportivo</p>
           </div>
-          <label for="rol">Filtrar por rol:</label>
-          <select id="rol">
-            <option value="entrenador">Entrenador</option>
-            <option value="admin">Administrador</option>
-          </select>
+          
+          <div style="display: flex; gap: 15px; top: 0; align-items: center; flex-wrap: wrap;">
+            <i class="bx bx-search"></i><input 
+              type="text" 
+              id="busquedaNombre" 
+              placeholder="Buscar por nombre..." 
+              style="padding: 10px; border-radius: 4px; border: 1px solid #ccc; width: 200px;"
+            >
+            
+            <div>
+              <label for="rol">Filtrar por rol:</label>
+              <select id="rol" style="padding: 6px; border-radius: 4px; border: 1px solid #ccc;">
+                <option value="todos">Todos</option> <option value="entrenador">Entrenador</option>
+                <option value="admin">Administrador</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div class="card">

@@ -1,5 +1,4 @@
-// Importaciones de Firebase (SDK Modular)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import {
   getFirestore,
   doc,
@@ -8,9 +7,11 @@ import {
   addDoc,
   updateDoc,
   serverTimestamp,
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+  query, // NUEVO
+  where, // NUEVO
+  getDocs, // NUEVO
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
-// Tu configuración de Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyCm93cp4p7dmepeN2RFUSKsz7ECZwGV9Ag",
   authDomain: "academia-uv.firebaseapp.com",
@@ -21,14 +22,13 @@ const firebaseConfig = {
   measurementId: "G-YWP42R9EST",
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Simulación de ID del entrenador (Deberá venir de tu sistema de Login más adelante)
 const idEntrenadorActual = "entrenador_demo_01";
+const nombreEntrenadorActual = "Prof. Alejandro Gómez";
 
-// --- 1. LÓGICA DE FIREBASE (VALIDACIÓN) ---
+// --- LÓGICA DE FIREBASE (VALIDACIÓN Y REGISTRO) ---
 async function validarAsistencia(textoEscaneado) {
   try {
     const datosQR = JSON.parse(textoEscaneado);
@@ -39,50 +39,78 @@ async function validarAsistencia(textoEscaneado) {
     const docMonitor = await getDoc(refMonitor);
 
     if (docMonitor.exists()) {
-      const tokenFirebase = docMonitor.data().tokenActivo;
+      const datosMonitor = docMonitor.data();
+      const tokenFirebase = datosMonitor.tokenActivo;
+
+      // Obtenemos si la pantalla estaba en modo Entrada o Salida
+      const tipoAsistencia = datosMonitor.tipo || "Entrada";
 
       if (tokenFirebase === tokenEscaneado) {
-        // Invalida el token para que no se reutilice
+        // 1. Invalidamos el token visual en la pantalla principal
         await updateDoc(refMonitor, {
+          status: "escaneado",
+          quienEscaneo: nombreEntrenadorActual,
           tokenActivo: "CONSUMIDO_" + Date.now(),
         });
 
-        // Guarda la asistencia
-        await addDoc(collection(db, "asistencias"), {
-          id_usuario: idEntrenadorActual,
-          ubicacion: ubicacionQR,
-          tipo: "Entrada",
-          fecha_hora: serverTimestamp(),
-          estatus: "Presente",
-        });
+        // 2. Procesamos el guardado dependiendo del tipo
+        const asistenciasRef = collection(db, "asistencias");
+        // Guardamos la fecha como un string exacto (ej. "15/6/2026") para facilitar las búsquedas
+        const fechaHoy = new Date().toLocaleDateString("es-MX");
 
-        alert("¡Registro exitoso! Asistencia guardada correctamente.");
+        if (tipoAsistencia === "Entrada") {
+          // Creamos un documento nuevo con la hora de entrada
+          await addDoc(asistenciasRef, {
+            id_usuario: idEntrenadorActual,
+            nombre: nombreEntrenadorActual,
+            ubicacion: ubicacionQR,
+            fecha: fechaHoy,
+            horaEntrada: serverTimestamp(),
+            horaSalida: null, // Aún no ha salido
+            estatus: "Presente",
+          });
+          alert("¡Entrada registrada con éxito!");
+        } else if (tipoAsistencia === "Salida") {
+          // Buscamos el documento que coincida con el entrenador y la fecha de hoy
+          const q = query(
+            asistenciasRef,
+            where("id_usuario", "==", idEntrenadorActual),
+            where("fecha", "==", fechaHoy),
+          );
+
+          const querySnapshot = await getDocs(q);
+
+          if (!querySnapshot.empty) {
+            // Si encontramos el registro, tomamos su ID y lo actualizamos
+            const docAsistencia = querySnapshot.docs[0];
+            await updateDoc(doc(db, "asistencias", docAsistencia.id), {
+              horaSalida: serverTimestamp(),
+            });
+            alert("¡Salida registrada correctamente en tu asistencia de hoy!");
+          } else {
+            // Protección por si intenta registrar salida sin haber registrado entrada
+            alert(
+              "Error: No se encontró tu registro de Entrada para el día de hoy.",
+            );
+          }
+        }
       } else {
         alert(
-          "El código QR ha expirado. Por favor, escanea el código más reciente de la pantalla.",
+          "El código QR ha expirado. Por favor, escanea el de la pantalla.",
         );
       }
     } else {
       alert("Error: Ubicación no registrada en el sistema.");
     }
   } catch (error) {
-    console.warn(
-      "El código escaneado no tiene el formato JSON correcto del sistema.",
-      error,
-    );
+    console.warn("El código escaneado no es válido.", error);
   }
 }
 
-// --- 2. LÓGICA DE LA CÁMARA (HTML5-QRCODE) ---
+// --- LÓGICA DE LA CÁMARA ---
 function onScanSuccess(decodedText, decodedResult) {
-  console.log(`Código detectado: ${decodedText}`);
-
-  // Pausar el escáner para no saturar la base de datos con lecturas repetidas
   html5QrcodeScanner.pause(true);
-
-  // Ejecutar la validación de Firebase
   validarAsistencia(decodedText).then(() => {
-    // Reanudar el escáner después de 3 segundos por si necesita escanear otra cosa
     setTimeout(() => {
       html5QrcodeScanner.resume();
     }, 3000);
@@ -90,8 +118,16 @@ function onScanSuccess(decodedText, decodedResult) {
 }
 
 function onScanFailure(error) {
-  // Es normal que falle repetidamente mientras intenta enfocar, se ignora en silencio
+  // Ignorar errores de enfoque silenciosamente
 }
+
+let html5QrcodeScanner = new Html5QrcodeScanner(
+  "reader",
+  { fps: 10, qrbox: { width: 250, height: 250 } },
+  false,
+);
+
+html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
 // Inicializar la interfaz del escáner
 let html5QrcodeScanner = new Html5QrcodeScanner(
