@@ -17,23 +17,18 @@ let idEntrenadorActual = null;
 let nombreEntrenadorActual = "Cargando...";
 
 // --- 1. OBTENER EL USUARIO REAL (FIREBASE AUTH) ---
-// Esta función escucha activamente la sesión del navegador
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
-      // El usuario está logueado, buscamos su nombre en la colección 'usuarios'
-      const q = query(
-        collection(db, "usuarios"),
-        where("correo", "==", user.email),
-      );
-      const querySnapshot = await getDocs(q);
+      // Buscamos directamente el documento del usuario usando su UID
+      const docRef = doc(db, "usuarios", user.uid);
+      const docSnap = await getDoc(docRef);
 
-      if (!querySnapshot.empty) {
-        const docUsuario = querySnapshot.docs[0];
-        idEntrenadorActual = docUsuario.id;
-        nombreEntrenadorActual = docUsuario.data().nombre;
+      if (docSnap.exists()) {
+        idEntrenadorActual = docSnap.id;
+        nombreEntrenadorActual = docSnap.data().nombre;
       } else {
-        console.error("El correo no existe en la colección de usuarios.");
+        console.error("El perfil del usuario no existe en la base de datos.");
       }
     } catch (error) {
       console.error("Error al consultar el usuario:", error);
