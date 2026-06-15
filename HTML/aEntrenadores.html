@@ -60,36 +60,50 @@
           </select>
         </div>
 
-        <div class="student-list">
-          <div class="student-row">
-            <div>
-              <strong>Prof. Juan Pérez</strong>
-              <p class="muted">Rol: Entrenador</p>
-            </div>
-            <div>
-              <span class="badge">Activo</span>
-              <button class="secondary-btn">
-                <i class="bx bx-edit-alt"></i> Gestionar
-              </button>
-            </div>
-          </div>
+        <div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Matrícula</th>
+        <th>Correo</th>
+        <th>Rol</th>
+        <th>Estatus</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tablaEntrenadores">
+      </tbody>
+  </table>
+</div>
 
-          <div class="student-row">
-            <div>
-              <strong>Prof. Juan Pérez 2</strong>
-              <p class="muted">Rol: administrador</p>
-            </div>
-            <div>
-              <span class="badge">Activo</span>
-              <button class="secondary-btn">
-                <i class="bx bx-edit-alt"></i> Gestionar
-              </button>
-            </div>
-          </div>
-        </div>
-      </main>
+<div id="modalGestion" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+  <div class="card" style="background: white; padding: 20px; border-radius: 8px; width: 400px; position: relative;">
+    <h3>Gestionar Usuario</h3>
+    <br>
+    <p><strong>Nombre:</strong> <span id="modalNombre"></span></p>
+    <p><strong>Correo:</strong> <span id="modalCorreo"></span></p>
+    <br>
+    
+    <div style="margin-bottom: 15px;">
+      <label for="modalEstatus"><strong>Estatus del usuario:</strong></label>
+      <select id="modalEstatus" style="width: 100%; padding: 8px; margin-top: 5px;">
+        <option value="Activo">Activo</option>
+        <option value="Inactivo">Inactivo</option>
+      </select>
     </div>
 
-    <script type="text/javascript" src="../JS/CrearUsuarios.js"></script>
+    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+      <button id="btnEnviarContrasena" class="btn" style="background-color: #2196F3;">Enviar correo de nueva contraseña</button>
+      <button id="btnGuardarCambios" class="btn">Guardar Cambios</button>
+      <button id="btnEliminarLogico" class="btn" style="background-color: #f44336;">Eliminar Usuario del Sistema</button>
+      <button id="btnCerrarModal" class="btn" style="background-color: #757575;">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="../JS/AdminEntrenadores.js"></script>
+
+    <script type="module" src="../JS/CrearUsuarios.js"></script>
   </body>
 </html>

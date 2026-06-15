@@ -15,7 +15,6 @@ form.addEventListener("submit", async (e) => {
 
   // Obtener los valores de los inputs
   const nombre = document.getElementById("nombre").value;
-  const matricula = document.getElementById("matricula").value;
   const correo = document.getElementById("correo").value;
   const rol = document.getElementById("rol").value;
   const password = document.getElementById("password").value;
@@ -36,6 +35,7 @@ form.addEventListener("submit", async (e) => {
       matricula: matricula,
       correo: correo,
       rol: rol,
+      estatus: "Activo", // <-- Asegura esta línea
       fechaCreacion: new Date(),
     });
 
