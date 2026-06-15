@@ -1178,7 +1178,8 @@ var QRCode;
 
           // Android 2.1 bug workaround
           // http://code.google.com/p/android/issues/detail?id=5141
-          if (this._android && this._android <= 2.1) {
+          var versionAndroid = _getAndroid();
+          if (versionAndroid && versionAndroid <= 2.1) {
             var factor = 1 / window.devicePixelRatio;
             var drawImage = CanvasRenderingContext2D.prototype.drawImage;
             CanvasRenderingContext2D.prototype.drawImage = function (
@@ -1537,35 +1538,6 @@ var QRCode;
    */
   QRCode.CorrectLevel = QRErrorCorrectLevel;
 })();
-
-// Crear QR
-var qrcode = new QRCode(document.getElementById("qrcode"), {
-  width: 100,
-  height: 100,
-});
-
-function makeCode() {
-  var elText = document.getElementById("text");
-
-  if (!elText.value) {
-    elText.focus();
-    return;
-  }
-
-  qrcode.makeCode(elText.value);
-}
-
-makeCode();
-
-$("#text")
-  .on("blur", function () {
-    makeCode();
-  })
-  .on("keydown", function (e) {
-    if (e.keyCode == 13) {
-      makeCode();
-    }
-  });
 
 // Contenido del QR
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
