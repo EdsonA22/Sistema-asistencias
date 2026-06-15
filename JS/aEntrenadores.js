@@ -13,7 +13,6 @@ import {
 
 import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
-const tabla = document.getElementById("tablaEntrenadores");
 // ... el resto de tu código se mantiene igual ...
 const tabla = document.getElementById("tablaEntrenadores");
 const modal = document.getElementById("modalGestion");
@@ -58,7 +57,6 @@ async function cargarUsuarios() {
       const estatusActual = user.estatus || "Activo";
 
       const fila = document.createElement("tr");
-      // Se ha eliminado la línea de la matrícula para reflejar tus cambios
       fila.innerHTML = `
                 <td>${user.nombre}</td>
                 <td>${user.correo}</td>

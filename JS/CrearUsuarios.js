@@ -1,9 +1,9 @@
 import { auth, db } from "./Conexion.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import {
   doc,
   setDoc,
-} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
 
 const form = document.getElementById("formCrearUsuario");
 
@@ -14,7 +14,7 @@ if (form) {
     // Ya no buscamos el ID "matricula"
     const nombre = document.getElementById("nombre").value.trim();
     const correo = document.getElementById("correo").value.trim();
-    const rol = document.getElementById("rol").value;
+    const rol = document.getElementById("rol").value.trim();
     const password = document.getElementById("password").value;
 
     try {
