@@ -94,12 +94,28 @@ function renderizarTabla() {
   // Iteramos sobre el arreglo ya filtrado y construimos las filas
   usuariosFiltrados.forEach((user) => {
     const estatusActual = user.estatus || "Activo";
+
+    // 1. Extraemos el rol técnico de la base de datos
+    const rolTecnico = user.rol;
+
+    // 2. Preparamos la variable para la vista
+    let rolVisual = rolTecnico;
+
+    // 3. Aplicamos la traducción (Mapeo de datos)
+    if (rolTecnico === "entrenador") {
+      rolVisual = "Entrenador (a)";
+    } else if (rolTecnico === "admin") {
+      rolVisual = "Usuario";
+    }
+
     const fila = document.createElement("tr");
 
+    // 4. Inyectamos las variables en la estructura HTML
+    // Observa cómo en la tercera columna (<td>) ahora utilizamos ${rolVisual} en lugar de ${user.rol}
     fila.innerHTML = `
       <td>${user.nombre}</td>
       <td>${user.correo}</td>
-      <td>${user.rol}</td>
+      <td>${rolVisual}</td> 
       <td><span class="badge ${estatusActual.toLowerCase()}">${estatusActual}</span></td>
       <td>
           <button class="btn btn-gestionar" data-id="${user.id}" data-nombre="${user.nombre}" data-correo="${user.correo}" data-estatus="${estatusActual}">
