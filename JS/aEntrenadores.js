@@ -6,8 +6,12 @@ import {
   updateDoc,
   query,
   where,
+  getDoc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {
+  sendPasswordResetEmail,
+  onAuthStateChanged,
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 // Elementos del DOM generales
 const tabla = document.getElementById("tablaEntrenadores");
@@ -32,28 +36,64 @@ let usuarioSeleccionadoEmail = null;
 // Arreglo local para evitar consultar a Firebase en cada búsqueda
 let todosLosUsuarios = [];
 
-// 1. Obtener datos de Firestore (Solo se ejecuta al cargar la página)
+// 1. Obtener datos de Firestore (Modificada para no requerir parámetros y evitar errores al actualizar)
 async function cargarUsuarios() {
   if (!tabla) return;
   tabla.innerHTML = "<tr><td colspan='5'>Cargando usuarios...</td></tr>";
 
-  try {
-    const q = query(
-      collection(db, "usuarios"),
-      where("estatus", "!=", "Eliminado"),
-    );
-    const querySnapshot = await getDocs(q);
+  // Obtenemos al usuario que inició sesión directamente de auth
+  const usuarioActual = auth.currentUser;
 
-    todosLosUsuarios = []; // Vaciamos el arreglo por si hay recargas
+  if (!usuarioActual) {
+    tabla.innerHTML = "<tr><td colspan='5'>No hay sesión activa.</td></tr>";
+    return;
+  }
+
+  try {
+    // Buscamos el "expediente" del administrador que inició sesión
+    const adminRef = doc(db, "usuarios", usuarioActual.uid);
+    const adminSnap = await getDoc(adminRef);
+
+    // Asignamos 'General' por si el usuario es antiguo y no tiene categoría
+    let categoriaAdmin = "General";
+
+    if (adminSnap.exists()) {
+      const datosAdmin = adminSnap.data();
+      if (datosAdmin.categoria) {
+        categoriaAdmin = datosAdmin.categoria;
+      }
+    }
+
+    // Preparamos la consulta (query) dependiendo de su categoría
+    let q;
+    if (categoriaAdmin === "General") {
+      // Si es General, solicitamos toda la colección a Firebase
+      q = query(collection(db, "usuarios"));
+    } else {
+      // Si es de un deporte, filtramos SOLO por categoría en Firebase
+      q = query(
+        collection(db, "usuarios"),
+        where("categoria", "==", categoriaAdmin),
+      );
+    }
+
+    // Ejecutamos la consulta
+    const querySnapshot = await getDocs(q);
+    todosLosUsuarios = []; // Vaciamos el arreglo
 
     querySnapshot.forEach((documento) => {
-      todosLosUsuarios.push({
-        id: documento.id,
-        ...documento.data(),
-      });
+      const data = documento.data();
+
+      // Filtramos el estatus "Eliminado" en JavaScript
+      if (data.estatus !== "Eliminado") {
+        todosLosUsuarios.push({
+          id: documento.id,
+          ...data,
+        });
+      }
     });
 
-    renderizarTabla(); // Dibujamos la tabla con todos los datos
+    renderizarTabla();
   } catch (error) {
     console.error("Error al cargar usuarios:", error);
     tabla.innerHTML =
@@ -66,18 +106,14 @@ function renderizarTabla() {
   if (!tabla) return;
   tabla.innerHTML = "";
 
-  // Obtenemos los valores actuales (convertidos a minúsculas para comparaciones exactas)
   const textoBusqueda = inputBusqueda ? inputBusqueda.value.toLowerCase() : "";
   const rolSeleccionado = selectRol ? selectRol.value.toLowerCase() : "todos";
 
-  // Filtramos el arreglo local
   const usuariosFiltrados = todosLosUsuarios.filter((user) => {
-    // Verificamos si el nombre incluye lo que el usuario escribe
     const nombreValido = user.nombre
       ? user.nombre.toLowerCase().includes(textoBusqueda)
       : false;
 
-    // Verificamos si coincide el rol (o si está seleccionada la opción "Todos")
     const rolValido =
       rolSeleccionado === "todos" ||
       (user.rol && user.rol.toLowerCase() === rolSeleccionado);
@@ -91,17 +127,11 @@ function renderizarTabla() {
     return;
   }
 
-  // Iteramos sobre el arreglo ya filtrado y construimos las filas
   usuariosFiltrados.forEach((user) => {
     const estatusActual = user.estatus || "Activo";
-
-    // 1. Extraemos el rol técnico de la base de datos
     const rolTecnico = user.rol;
-
-    // 2. Preparamos la variable para la vista
     let rolVisual = rolTecnico;
 
-    // 3. Aplicamos la traducción (Mapeo de datos)
     if (rolTecnico === "entrenador") {
       rolVisual = "Entrenador (a)";
     } else if (rolTecnico === "admin") {
@@ -110,8 +140,6 @@ function renderizarTabla() {
 
     const fila = document.createElement("tr");
 
-    // 4. Inyectamos las variables en la estructura HTML
-    // Observa cómo en la tercera columna (<td>) ahora utilizamos ${rolVisual} en lugar de ${user.rol}
     fila.innerHTML = `
       <td>${user.nombre}</td>
       <td>${user.correo}</td>
@@ -126,7 +154,6 @@ function renderizarTabla() {
     tabla.appendChild(fila);
   });
 
-  // Reasignamos los eventos a los botones de la tabla recién creada
   document.querySelectorAll(".btn-gestionar").forEach((boton) => {
     boton.addEventListener("click", (e) => {
       usuarioSeleccionadoId = e.target.getAttribute("data-id");
@@ -141,7 +168,7 @@ function renderizarTabla() {
   });
 }
 
-// 3. Listeners de búsqueda dinámica (Disparan renderizarTabla sin ir a la base de datos)
+// 3. Listeners de búsqueda dinámica
 if (inputBusqueda) {
   inputBusqueda.addEventListener("input", renderizarTabla);
 }
@@ -162,7 +189,7 @@ if (btnGuardarCambios) {
 
       alert("Estatus actualizado correctamente.");
       modal.style.display = "none";
-      cargarUsuarios(); // Recargamos para actualizar datos desde el servidor
+      cargarUsuarios(); // Ahora funciona correctamente sin generar errores
     } catch (error) {
       alert("Error al actualizar: " + error.message);
     }
@@ -203,7 +230,7 @@ if (btnEliminarLogico) {
 
       alert("Usuario eliminado del sistema correctamente.");
       modal.style.display = "none";
-      cargarUsuarios(); // Recargamos para que desaparezca de la tabla
+      cargarUsuarios(); // Ahora funciona correctamente sin generar errores
     } catch (error) {
       alert("Error al eliminar: " + error.message);
     }
@@ -216,5 +243,12 @@ if (btnCerrarModal) {
   });
 }
 
-// Inicialización
-document.addEventListener("DOMContentLoaded", cargarUsuarios);
+// 4. Inicialización (Gatillo principal)
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    cargarUsuarios();
+  } else {
+    // Si no hay usuario logueado, lo mandamos al login
+    window.location.href = "login.html";
+  }
+});

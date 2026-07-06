@@ -1,55 +1,96 @@
-import { db } from "./Conexion.js";
+import { db, auth } from "./Conexion.js"; // Añadimos auth
 import {
   collection,
   query,
   where,
   getDocs,
+  getDoc, // Añadimos getDoc para leer perfil del admin
+  doc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js"; // Añadimos el observador de sesión
 
 // Referencias a los elementos de tu HTML
 const tbody = document.querySelector("tbody");
 // Asumimos que tienes un selector de mes en tu aTablaMens.html con este ID
 const inputMes = document.getElementById("mesSeleccionado");
 
-// 1. Mostrar la lista de entrenadores
+// 1. Mostrar la lista de entrenadores filtrada por la categoría del administrador
 async function cargarEntrenadores() {
+  if (!tbody) return;
   tbody.innerHTML =
     "<tr><td colspan='2' style='text-align:center;'>Cargando entrenadores...</td></tr>";
 
-  try {
-    // Consultamos solo a los usuarios que tengan el rol de "entrenador"
-    const q = query(
-      collection(db, "usuarios"),
-      where("rol", "==", "entrenador"),
-    );
-    const querySnapshot = await getDocs(q);
+  // Obtenemos al usuario que inició sesión
+  const usuarioActual = auth.currentUser;
 
+  if (!usuarioActual) {
+    tbody.innerHTML =
+      "<tr><td colspan='2' style='text-align:center;'>No hay sesión activa.</td></tr>";
+    return;
+  }
+
+  try {
+    // A. Buscamos el "expediente" del administrador para saber su categoría
+    const adminRef = doc(db, "usuarios", usuarioActual.uid);
+    const adminSnap = await getDoc(adminRef);
+
+    let categoriaAdmin = "General";
+
+    if (adminSnap.exists()) {
+      const datosAdmin = adminSnap.data();
+      if (datosAdmin.categoria) {
+        categoriaAdmin = datosAdmin.categoria;
+      }
+    }
+
+    // B. Preparamos la consulta (query) dependiendo de su categoría
+    let q;
+    if (categoriaAdmin === "General") {
+      // Si es General, solicitamos a todos los entrenadores
+      q = query(collection(db, "usuarios"), where("rol", "==", "entrenador"));
+    } else {
+      // Si es de un deporte, filtramos por rol Y por su categoría
+      q = query(
+        collection(db, "usuarios"),
+        where("rol", "==", "entrenador"),
+        where("categoria", "==", categoriaAdmin),
+      );
+    }
+
+    const querySnapshot = await getDocs(q);
     tbody.innerHTML = ""; // Limpiamos la tabla
 
-    if (querySnapshot.empty) {
-      tbody.innerHTML =
-        "<tr><td colspan='2' style='text-align:center;'>No hay entrenadores registrados en el sistema.</td></tr>";
-      return;
-    }
+    let entrenadoresMostrados = 0; // Contador para saber si hubo resultados
 
     // Dibujamos una fila por cada entrenador encontrado
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
       const idDoc = docSnap.id;
 
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${data.nombre}</td>
-        <td>
-          <button class="secondary-btn btn-descargar" 
-                  data-id="${idDoc}" 
-                  data-nombre="${data.nombre}">
-            <i class="bx bx-download"></i> Descargar Bitácora
-          </button>
-        </td>
-      `;
-      tbody.appendChild(tr);
+      // Filtramos a los eliminados directamente aquí para evitar errores de Firebase
+      if (data.estatus !== "Eliminado") {
+        entrenadoresMostrados++;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${data.nombre}</td>
+          <td>
+            <button class="secondary-btn btn-descargar" 
+                    data-id="${idDoc}" 
+                    data-nombre="${data.nombre}">
+              <i class="bx bx-download"></i> Descargar Bitácora
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      }
     });
+
+    // Si después de filtrar no quedó nadie
+    if (entrenadoresMostrados === 0) {
+      tbody.innerHTML =
+        "<tr><td colspan='2' style='text-align:center;'>No hay entrenadores registrados en esta categoría.</td></tr>";
+      return;
+    }
 
     // Asignar el evento "click" a todos los nuevos botones generados
     document.querySelectorAll(".btn-descargar").forEach((btn) => {
@@ -64,51 +105,42 @@ async function cargarEntrenadores() {
 
 // 2. Lógica para generar el archivo mensual
 async function generarYDescargarBitacora(e) {
-  // Verificamos que el administrador haya elegido un mes
   if (!inputMes || !inputMes.value) {
     alert("Por favor, selecciona un mes antes de descargar la bitácora.");
     return;
   }
 
-  // El input type="month" devuelve el valor en formato "YYYY-MM" (Ej: "2026-06")
   const [anioSeleccionado, mesSeleccionado] = inputMes.value.split("-");
 
   const btn = e.currentTarget;
   const idEntrenador = btn.getAttribute("data-id");
   const nombre = btn.getAttribute("data-nombre");
 
-  // Efecto visual de carga en el botón
   const textoOriginal = btn.innerHTML;
   btn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Generando...";
   btn.disabled = true;
 
   try {
-    // Obtenemos TODO el historial de asistencia de este entrenador
     const q = query(
       collection(db, "asistencias"),
       where("id_usuario", "==", idEntrenador),
     );
     const querySnapshot = await getDocs(q);
 
-    // Contadores estadísticos
     let totalAsistencias = 0;
     let totalFaltas = 0;
     let totalRetardos = 0;
     let detalleIncidencias = [];
 
-    // Recorremos los registros para filtrar los del mes elegido
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
       if (!data.fecha) return;
 
-      // Tu archivo QRScanner.js guarda la fecha como "D/M/YYYY" o "DD/MM/YYYY" (Ej: "15/6/2026")
-      // Debemos separar esos números para compararlos
       const partesFecha = data.fecha.split("/");
       const diaBD = partesFecha[0];
-      const mesBD = partesFecha[1].padStart(2, "0"); // padStart convierte un "6" en "06" para igualar formatos
+      const mesBD = partesFecha[1].padStart(2, "0");
       const anioBD = partesFecha[2];
 
-      // Verificamos si este registro pertenece al año y mes solicitados
       if (anioBD === anioSeleccionado && mesBD === mesSeleccionado) {
         const estatus = data.estatus || "Desconocido";
 
@@ -120,7 +152,7 @@ async function generarYDescargarBitacora(e) {
           estatus === "Justificado"
         ) {
           totalFaltas++;
-          detalleIncidencias.push(`Día ${diaBD},${estatus}`); // Formato CSV
+          detalleIncidencias.push(`Día ${diaBD},${estatus}`);
         } else if (estatus === "Retardo") {
           totalRetardos++;
           detalleIncidencias.push(`Día ${diaBD},Retardo`);
@@ -129,7 +161,6 @@ async function generarYDescargarBitacora(e) {
     });
 
     // 3. Construcción del archivo CSV
-    // El código "\uFEFF" (Byte Order Mark) le indica a Excel que use codificación UTF-8, previniendo que los acentos salgan rotos.
     let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
 
     csvContent += `Reporte Mensual de Asistencia\n\n`;
@@ -145,7 +176,7 @@ async function generarYDescargarBitacora(e) {
     if (detalleIncidencias.length > 0) {
       csvContent += `Fecha,Estado\n`;
       detalleIncidencias.forEach((incidencia) => {
-        csvContent += `${incidencia}\n`; // Agregamos "Día 15,Retardo"
+        csvContent += `${incidencia}\n`;
       });
     } else {
       csvContent += `Excelente,,Sin faltas ni retardos este mes.\n`;
@@ -156,8 +187,7 @@ async function generarYDescargarBitacora(e) {
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
 
-    // Nombre del archivo a descargar (Ej: Bitacora_Juan_Perez_06-2026.csv)
-    let nombreArchivo = nombre.replace(/ /g, "_"); // Reemplazamos espacios por guiones bajos
+    let nombreArchivo = nombre.replace(/ /g, "_");
     link.setAttribute(
       "download",
       `Bitacora_${nombreArchivo}_${mesSeleccionado}-${anioSeleccionado}.csv`,
@@ -170,44 +200,38 @@ async function generarYDescargarBitacora(e) {
     console.error("Error al generar reporte:", error);
     alert("Hubo un problema al consultar la base de datos.");
   } finally {
-    // Pase lo que pase, regresamos el botón a la normalidad
     btn.innerHTML = textoOriginal;
     btn.disabled = false;
   }
 }
 
-// Ejecutar la función inicial al cargar la página
-cargarEntrenadores();
-
 // --- LÓGICA DEL BUSCADOR EN TIEMPO REAL ---
 const inputBuscador = document.getElementById("buscadorEntrenadores");
 
 if (inputBuscador) {
-  // El evento "input" se dispara cada vez que el usuario escribe o borra una letra
   inputBuscador.addEventListener("input", (e) => {
-    // Convertimos el texto buscado a minúsculas para que la búsqueda no sea sensible a mayúsculas
     const terminoBusqueda = e.target.value.toLowerCase();
-
-    // Obtenemos todas las filas (tr) que están actualmente dentro del cuerpo de la tabla
     const filas = tbody.querySelectorAll("tr");
 
     filas.forEach((fila) => {
-      // Obtenemos la primera celda (td) de la fila, que es donde está el nombre del entrenador
       const celdaNombre = fila.querySelector("td");
-
-      // Verificamos que la celda exista y que la fila contenga un botón de descarga
-      // (esto evita que el buscador intente ocultar el mensaje de "Cargando..." o "No hay registros")
       if (celdaNombre && fila.querySelector(".btn-descargar")) {
         const nombreEntrenador = celdaNombre.textContent.toLowerCase();
-
-        // Si el nombre del entrenador incluye el texto que estamos buscando, mostramos la fila
         if (nombreEntrenador.includes(terminoBusqueda)) {
           fila.style.display = "";
         } else {
-          // Si no coincide, ocultamos la fila por completo
           fila.style.display = "none";
         }
       }
     });
   });
 }
+
+// 5. Inicialización Segura (Gatillo principal)
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    cargarEntrenadores();
+  } else {
+    window.location.href = "login.html";
+  }
+});

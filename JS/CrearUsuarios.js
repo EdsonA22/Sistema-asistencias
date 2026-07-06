@@ -16,6 +16,7 @@ if (form) {
     const correo = document.getElementById("correo").value.trim();
     const rol = document.getElementById("rol").value.trim();
     const password = document.getElementById("password").value;
+    const categoria = document.getElementById("categoria").value;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -30,6 +31,7 @@ if (form) {
         nombre: nombre,
         correo: correo,
         rol: rol,
+        categoria: categoria,
         estatus: "Activo",
         fechaCreacion: new Date(),
       });
