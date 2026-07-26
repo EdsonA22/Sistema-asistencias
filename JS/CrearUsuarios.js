@@ -1,5 +1,8 @@
 import { auth, db } from "./Conexion.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification, // NUEVO: Importamos la herramienta para enviar el correo
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 import {
   doc,
   setDoc,
@@ -11,14 +14,14 @@ if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    // Ya no buscamos el ID "matricula"
     const nombre = document.getElementById("nombre").value.trim();
     const correo = document.getElementById("correo").value.trim();
     const rol = document.getElementById("rol").value.trim();
-    const password = document.getElementById("password").value;
     const categoria = document.getElementById("categoria").value;
+    const password = document.getElementById("password").value;
 
     try {
+      // 1. Firebase crea la cuenta
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         correo,
@@ -26,7 +29,10 @@ if (form) {
       );
       const usuarioFirebase = userCredential.user;
 
-      // Guardamos solo los datos relevantes en Firestore
+      // 2. NUEVO: Le pedimos a Firebase que envíe el correo de verificación a esa cuenta
+      await sendEmailVerification(usuarioFirebase);
+
+      // 3. Guardamos los datos en Firestore
       await setDoc(doc(db, "usuarios", usuarioFirebase.uid), {
         nombre: nombre,
         correo: correo,
@@ -36,21 +42,13 @@ if (form) {
         fechaCreacion: new Date(),
       });
 
-      alert("Usuario registrado exitosamente en el sistema.");
+      alert(
+        "Usuario registrado exitosamente. Se ha enviado un correo de verificación.",
+      );
       form.reset();
     } catch (error) {
-      console.error("Error en el registro:", error);
-      if (error.code === "auth/email-already-in-use") {
-        alert(
-          "Ocurrió un error: Este correo ya está registrado en el sistema.",
-        );
-      } else if (error.code === "auth/weak-password") {
-        alert(
-          "Ocurrió un error: La contraseña debe tener al menos 6 caracteres.",
-        );
-      } else {
-        alert("Ocurrió un error al registrar: " + error.message);
-      }
+      console.error("Error al registrar:", error);
+      alert("Ocurrió un error: " + error.message);
     }
   });
 }
