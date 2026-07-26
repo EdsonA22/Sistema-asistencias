@@ -1,28 +1,25 @@
-import { db, auth } from "./Conexion.js"; // Añadimos auth
+import { db, auth } from "./Conexion.js";
 import {
   collection,
   query,
   where,
   getDocs,
-  getDoc, // Añadimos getDoc para leer perfil del admin
+  getDoc,
   doc,
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js"; // Añadimos el observador de sesión
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
 
 // Referencias a los elementos de tu HTML
 const tbody = document.querySelector("tbody");
-// Asumimos que tienes un selector de mes en tu aTablaMens.html con este ID
 const inputMes = document.getElementById("mesSeleccionado");
 
-// 1. Mostrar la lista de entrenadores filtrada por la categoría del administrador
+// === 1. CARGAR ENTRENADORES FILTRADOS ===
 async function cargarEntrenadores() {
   if (!tbody) return;
   tbody.innerHTML =
     "<tr><td colspan='2' style='text-align:center;'>Cargando entrenadores...</td></tr>";
 
-  // Obtenemos al usuario que inició sesión
   const usuarioActual = auth.currentUser;
-
   if (!usuarioActual) {
     tbody.innerHTML =
       "<tr><td colspan='2' style='text-align:center;'>No hay sesión activa.</td></tr>";
@@ -30,26 +27,18 @@ async function cargarEntrenadores() {
   }
 
   try {
-    // A. Buscamos el "expediente" del administrador para saber su categoría
     const adminRef = doc(db, "usuarios", usuarioActual.uid);
     const adminSnap = await getDoc(adminRef);
 
     let categoriaAdmin = "General";
-
-    if (adminSnap.exists()) {
-      const datosAdmin = adminSnap.data();
-      if (datosAdmin.categoria) {
-        categoriaAdmin = datosAdmin.categoria;
-      }
+    if (adminSnap.exists() && adminSnap.data().categoria) {
+      categoriaAdmin = adminSnap.data().categoria;
     }
 
-    // B. Preparamos la consulta (query) dependiendo de su categoría
     let q;
     if (categoriaAdmin === "General") {
-      // Si es General, solicitamos a todos los entrenadores
       q = query(collection(db, "usuarios"), where("rol", "==", "entrenador"));
     } else {
-      // Si es de un deporte, filtramos por rol Y por su categoría
       q = query(
         collection(db, "usuarios"),
         where("rol", "==", "entrenador"),
@@ -58,16 +47,14 @@ async function cargarEntrenadores() {
     }
 
     const querySnapshot = await getDocs(q);
-    tbody.innerHTML = ""; // Limpiamos la tabla
+    tbody.innerHTML = "";
 
-    let entrenadoresMostrados = 0; // Contador para saber si hubo resultados
+    let entrenadoresMostrados = 0;
 
-    // Dibujamos una fila por cada entrenador encontrado
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
       const idDoc = docSnap.id;
 
-      // Filtramos a los eliminados directamente aquí para evitar errores de Firebase
       if (data.estatus !== "Eliminado") {
         entrenadoresMostrados++;
         const tr = document.createElement("tr");
@@ -85,14 +72,12 @@ async function cargarEntrenadores() {
       }
     });
 
-    // Si después de filtrar no quedó nadie
     if (entrenadoresMostrados === 0) {
       tbody.innerHTML =
         "<tr><td colspan='2' style='text-align:center;'>No hay entrenadores registrados en esta categoría.</td></tr>";
       return;
     }
 
-    // Asignar el evento "click" a todos los nuevos botones generados
     document.querySelectorAll(".btn-descargar").forEach((btn) => {
       btn.addEventListener("click", generarYDescargarBitacora);
     });
@@ -103,7 +88,7 @@ async function cargarEntrenadores() {
   }
 }
 
-// 2. Lógica para generar el archivo mensual
+// === 2. LÓGICA ANALÍTICA PARA GENERAR REPORTE ===
 async function generarYDescargarBitacora(e) {
   if (!inputMes || !inputMes.value) {
     alert("Por favor, selecciona un mes antes de descargar la bitácora.");
@@ -127,22 +112,65 @@ async function generarYDescargarBitacora(e) {
     );
     const querySnapshot = await getDocs(q);
 
-    let totalAsistencias = 0;
-    let totalFaltas = 0;
-    let totalRetardos = 0;
-    let detalleIncidencias = [];
+    // Mapeamos (organizamos) los registros obtenidos por número de día
+    const registrosPorDia = new Map();
 
     querySnapshot.forEach((docSnap) => {
       const data = docSnap.data();
       if (!data.fecha) return;
 
       const partesFecha = data.fecha.split("/");
-      const diaBD = partesFecha[0];
+      const diaBD = parseInt(partesFecha[0]);
       const mesBD = partesFecha[1].padStart(2, "0");
       const anioBD = partesFecha[2];
 
       if (anioBD === anioSeleccionado && mesBD === mesSeleccionado) {
-        const estatus = data.estatus || "Desconocido";
+        registrosPorDia.set(diaBD, data.estatus || "Desconocido");
+      }
+    });
+
+    let totalAsistencias = 0;
+    let totalFaltas = 0;
+    let totalRetardos = 0;
+    let detalleIncidencias = [];
+
+    // Calcular el límite de días a evaluar en el mes
+    const hoy = new Date();
+    let limiteDias;
+
+    if (
+      hoy.getFullYear() === parseInt(anioSeleccionado) &&
+      hoy.getMonth() + 1 === parseInt(mesSeleccionado)
+    ) {
+      // Si el mes seleccionado es el actual, solo evaluamos hasta el día de hoy
+      limiteDias = hoy.getDate();
+    } else {
+      // Si es un mes pasado, obtenemos cuántos días tiene ese mes
+      limiteDias = new Date(
+        parseInt(anioSeleccionado),
+        parseInt(mesSeleccionado),
+        0,
+      ).getDate();
+    }
+
+    // Análisis día por día
+    for (let dia = 1; dia <= limiteDias; dia++) {
+      // Determinar qué día de la semana es (0 = Domingo, 1 = Lunes, etc.)
+      const fechaEvaluada = new Date(
+        parseInt(anioSeleccionado),
+        parseInt(mesSeleccionado) - 1,
+        dia,
+      );
+      const diaSemana = fechaEvaluada.getDay();
+
+      // EXCLUSIÓN DE DÍAS DE DESCANSO (0 es Domingo, si descansan sábados agrega: || diaSemana === 6)
+      if (diaSemana === 0) continue;
+
+      const diaFormateado = dia.toString().padStart(2, "0");
+
+      if (registrosPorDia.has(dia)) {
+        // Sí hubo un registro en Firebase para este día
+        const estatus = registrosPorDia.get(dia);
 
         if (estatus === "Presente") {
           totalAsistencias++;
@@ -152,15 +180,19 @@ async function generarYDescargarBitacora(e) {
           estatus === "Justificado"
         ) {
           totalFaltas++;
-          detalleIncidencias.push(`Día ${diaBD},${estatus}`);
+          detalleIncidencias.push(`Día ${diaFormateado},${estatus}`);
         } else if (estatus === "Retardo") {
           totalRetardos++;
-          detalleIncidencias.push(`Día ${diaBD},Retardo`);
+          detalleIncidencias.push(`Día ${diaFormateado},Retardo`);
         }
+      } else {
+        // NO hubo registro en Firebase, lo detectamos como FALTA AUTOMÁTICA
+        totalFaltas++;
+        detalleIncidencias.push(`Día ${diaFormateado},Falta (No se registró)`);
       }
-    });
+    }
 
-    // 3. Construcción del archivo CSV
+    // === 3. CONSTRUCCIÓN DEL CSV ===
     let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
 
     csvContent += `Reporte Mensual de Asistencia\n\n`;
@@ -182,7 +214,7 @@ async function generarYDescargarBitacora(e) {
       csvContent += `Excelente,,Sin faltas ni retardos este mes.\n`;
     }
 
-    // 4. Detonar la descarga automática
+    // === 4. DESCARGA AUTOMÁTICA ===
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
     link.setAttribute("href", encodedUri);
@@ -205,7 +237,7 @@ async function generarYDescargarBitacora(e) {
   }
 }
 
-// --- LÓGICA DEL BUSCADOR EN TIEMPO REAL ---
+// === BUSCADOR EN TIEMPO REAL ===
 const inputBuscador = document.getElementById("buscadorEntrenadores");
 
 if (inputBuscador) {
@@ -227,7 +259,7 @@ if (inputBuscador) {
   });
 }
 
-// 5. Inicialización Segura (Gatillo principal)
+// === 5. INICIALIZACIÓN SEGURA ===
 onAuthStateChanged(auth, (user) => {
   if (user) {
     cargarEntrenadores();
